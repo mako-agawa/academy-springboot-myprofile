@@ -1,8 +1,10 @@
 # My Profile アプリ
-## テーブル図
-    制作予定
-## ER図
-![ER図](/public/myProfile_erfigure.png)
+## サンプルデータ
+
+| id | name  | email             | password_digest | biography                   | thumbnail_url                  |
+|----|-------|-------------------|-----------------|-----------------------------|---------------------------------|
+| 1  | Alice | alice@example.com | pass1234 | I am Alice. I love coding.  | https://example.com/alice.jpg  |
+| 2  | Bob   | bob@example.com   | pass1234 | Hi, Bob here. Coffee addict.| https://example.com/bob.jpg    |
 
 
 ## コンテナ上でビルドを実行
