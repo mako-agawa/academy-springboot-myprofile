@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.example.demo.dao") // 実際のパッケージに変更
+@MapperScan("com.spring.springbootapplication.dao") // 実際のパッケージに変更
 public class SpringbootApplication {
 
 	public static void main(String[] args) {
