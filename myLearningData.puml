@@ -1,0 +1,41 @@
+@startuml
+hide circle
+hide methods
+skinparam linetype ortho
+
+entity categories {
+  *id : integer
+  --
+  title : string
+  created_at : datetime
+  updated_at : datetime
+}
+
+entity learning_data {
+  *id : integer
+  --
+  title : string
+  time : integer
+  learning_date : date
+  user_id : integer (FK)
+  category_id : integer (FK)
+  created_at : datetime
+  updated_at : datetime
+}
+
+entity users {
+  *id : integer
+  --
+  name : string
+  email : string
+  password: string
+  thumbnail_url : string
+  description : string
+  created_at : datetime
+  updated_at : datetime
+}
+
+users ||--|{ learning_data
+categories ||--|{ learning_data
+
+@enduml
