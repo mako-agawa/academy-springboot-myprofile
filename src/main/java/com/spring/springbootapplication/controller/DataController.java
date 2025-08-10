@@ -8,32 +8,49 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.springbootapplication.entity.Category;
+import com.spring.springbootapplication.entity.User;
 import com.spring.springbootapplication.repository.CategoryRepository;
+import com.spring.springbootapplication.repository.UserRepository;
 
 @Controller
 public class DataController {
 
     private final CategoryRepository categoryRepository;
+    private final UserRepository userRepository;
 
-    public DataController(CategoryRepository categoryRepository) {
+    public DataController(CategoryRepository categoryRepository, UserRepository userRepository) {
         this.categoryRepository = categoryRepository;
+        this.userRepository = userRepository;
     }
 
-    // /data にアクセスしたら data.html を返す
+    // 画面表示：カテゴリとユーザーを同時に渡す
     @GetMapping("/data")
-    public String index(Model model) {
-        List<Category> categoryData = categoryRepository.findAll(); // [frontEnd, backEnd, infra]
-        model.addAttribute("categories", categoryData); // ← テンプレに渡す名前を "categories" に統一
+    public String getData(Model model) {
+        List<Category> categoryData = categoryRepository.findAll();
+        List<User> userData = userRepository.findAll();
+
+        model.addAttribute("categories", categoryData);
+        model.addAttribute("users", userData);
+
         System.out.println("=================");
         System.out.println("categories = " + categoryData);
+        System.out.println("users      = " + userData);
         System.out.println("=================");
+
         return "data"; // src/main/resources/templates/data.html
     }
 
-    @GetMapping("/data/api")
+    // API: カテゴリ一覧（JSON）
+    @GetMapping("/data/api/categories")
     @ResponseBody
-    public List<Category> api() {
+    public List<Category> apiCategories() {
         return categoryRepository.findAll();
     }
 
+    // API: ユーザー一覧（JSON）
+    @GetMapping("/data/api/users")
+    @ResponseBody
+    public List<User> apiUsers() {
+        return userRepository.findAll();
+    }
 }
