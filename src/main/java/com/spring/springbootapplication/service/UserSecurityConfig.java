@@ -15,11 +15,11 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class UserSecurityConfig {
 
-    // private final UserController authController;
+    private final UserController authController;
 
-    // UserSecurityConfig(UserController authController) {
-    //     this.authController = authController;
-    // }
+    UserSecurityConfig(UserController authController) {
+        this.authController = authController;
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

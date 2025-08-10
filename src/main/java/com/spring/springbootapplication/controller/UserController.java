@@ -16,4 +16,12 @@ public class UserController {
         return mav;
     }
     
+        @RequestMapping("/register")
+    // @PreAuthorize("permitAll")
+    public ModelAndView register(ModelAndView mav) {
+        mav.setViewName("register");
+        mav.addObject("title", "新規登録");
+        mav.addObject("message", "はじめての方はこちらから登録をお願いします。");
+        return mav;
+    }
 }
