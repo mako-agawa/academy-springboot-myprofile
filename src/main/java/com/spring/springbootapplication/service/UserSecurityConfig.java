@@ -1,6 +1,6 @@
-package com.spring.springbootapplication;
+package com.spring.springbootapplication.service;
 
-import com.spring.springbootapplication.controller.AuthController;
+import com.spring.springbootapplication.controller.UserController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,9 +15,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class UserSecurityConfig {
 
-    private final AuthController authController;
+    private final UserController authController;
 
-    UserSecurityConfig(AuthController authController) {
+    UserSecurityConfig(UserController authController) {
         this.authController = authController;
     }
 
