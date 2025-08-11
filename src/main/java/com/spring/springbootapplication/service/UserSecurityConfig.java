@@ -1,6 +1,5 @@
 package com.spring.springbootapplication.service;
 
-import com.spring.springbootapplication.controller.UserController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,11 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class UserSecurityConfig {
 
-    private final UserController authController;
-
-    UserSecurityConfig(UserController authController) {
-        this.authController = authController;
-    }
+ 
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -44,5 +39,7 @@ public class UserSecurityConfig {
                 .roles("USER").build();
         return new InMemoryUserDetailsManager(user);
     }
+
+    
 
 }
