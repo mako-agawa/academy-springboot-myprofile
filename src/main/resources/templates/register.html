@@ -22,20 +22,23 @@
   <main class="pb-5 container ">
     <h1 th:text="${title}" class="text-center"></h1>
 
-    <form class="mt-4 text-start" th:action="@{/register}" th:object="${formModel}" method="post">
+    <form class="mt-4 text-start" th:action="@{/register}" th:object="${formModel}" method="post" novalidate>
       <div class="mb-3">
         <label class="form-label text-body text-opacity-50">ユーザー名</label>
         <input type="text" class="form-control" th:field="*{name}" required>
+        <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:errorclass="err"></div>
       </div>
 
       <div class="mb-3">
         <label class="form-label text-body text-opacity-50">メールアドレス</label>
         <input type="email" class="form-control" th:field="*{email}" required>
+        <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:errorclass="err"></div>
       </div>
 
       <div class="mb-3">
         <label class="form-label text-body text-opacity-50">パスワード</label>
         <input type="password" class="form-control" th:field="*{passwordDigest}" required>
+        <div class="text-danger" th:if="${#fields.hasErrors('passwordDigest')}" th:errors="*{passwordDigest}" th:errorclass="err"></div>
       </div>
 
       <!-- Spring Security 使ってるならCSRFトークン -->
