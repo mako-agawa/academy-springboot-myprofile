@@ -23,6 +23,7 @@ public class DataController {
         this.userRepository = userRepository;
     }
 
+    
     // 画面表示：カテゴリとユーザーを同時に渡す
     @GetMapping("/data")
     public String getData(Model model) {

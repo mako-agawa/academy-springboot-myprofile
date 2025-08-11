@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
@@ -8,6 +9,7 @@
   <!-- 先にBootstrap、後からcustom.css（上書きのため） -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
+
 <body>
   <header class="d-flex bg-primary justify-between align-items-center py-4">
     <h1 class="text-white d-flex">My Profile</h1>
@@ -20,27 +22,26 @@
   <main class="pb-5 container ">
     <h1 th:text="${title}" class="text-center"></h1>
 
-    <form class="mt-4 text-start" th:action="@{/register}" method="post">
+    <form class="mt-4 text-start" th:action="@{/register}" th:object="${formModel}" method="post">
       <div class="mb-3">
-        <label for="username" class="form-label text-body text-opacity-50">ユーザー名</label>
-        <input type="text" class="form-control" id="username" name="username" required>
+        <label class="form-label text-body text-opacity-50">ユーザー名</label>
+        <input type="text" class="form-control" th:field="*{name}" required>
       </div>
 
       <div class="mb-3">
-        <label for="email" class="form-label text-body text-opacity-50">メールアドレス</label>
-        <input type="email" class="form-control" id="email" name="email" required>
+        <label class="form-label text-body text-opacity-50">メールアドレス</label>
+        <input type="email" class="form-control" th:field="*{email}" required>
       </div>
 
       <div class="mb-3">
-        <label for="password" class="form-label text-body text-opacity-50">パスワード</label>
-        <input type="password" class="form-control" id="password" name="password" placeholder="※英数字8文字以上" required>
+        <label class="form-label text-body text-opacity-50">パスワード</label>
+        <input type="password" class="form-control" th:field="*{passwordDigest}" required>
       </div>
-      <div class="mb-3">
-        <label for="password_confirm" class="form-label text-body text-opacity-50">パスワード確認用</label>
-        <input type="password" class="form-control" id="password_confirm" placeholder="※英数字8文字以上" name="password_confirm" required>
-      </div>
+
+      <!-- Spring Security 使ってるならCSRFトークン -->
+      <!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"> -->
       <div class="mb-3 text-center">
-          <button type="submit" class="btn btn-primary">登録する</button>
+        <button type="submit" class="btn btn-primary">登録する</button>
       </div>
     </form>
   </main>
@@ -54,4 +55,5 @@
           integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
           crossorigin="anonymous"></script> -->
 </body>
+
 </html>
