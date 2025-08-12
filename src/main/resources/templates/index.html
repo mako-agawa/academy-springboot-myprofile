@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title th:text="${title}">Index</title>
+  <title>Index</title>
   <link href="/css/style.css" rel="stylesheet" />
 </head>
 
@@ -22,7 +22,6 @@
 
     <main clas="container main-content">
       <h1 class="main-title">Index Page!!!!</h1>
-      <h2 th:text="${message}">メッセージ</h2>
 
       <!-- users が空でなければテーブル表示 -->
       <div class="table-container" th:if="${users != null and !#lists.isEmpty(users)}">

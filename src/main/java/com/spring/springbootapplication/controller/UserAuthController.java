@@ -1,5 +1,6 @@
 package com.spring.springbootapplication.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
@@ -15,31 +16,40 @@ import jakarta.transaction.Transactional;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 
-public class UserController {
+public class UserAuthController {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder; // ★追加
 
-    public UserController(UserRepository userRepository,
+    public UserAuthController(UserRepository userRepository,
             PasswordEncoder passwordEncoder) { // ★追加
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder; // ★追加
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "login"; // login.html を返す
-
+    @RequestMapping("/login")
+    @PreAuthorize("permitAll")
+    public ModelAndView loginAuth(ModelAndView mav, @RequestParam(value = "error", required = false) String error) {
+        mav.setViewName("login");
+        System.out.println(error);
+        if (error != null) {
+            mav.addObject("msg", "メールアドレス、もしくはパスワードが間違っています");
+        } else {
+            mav.addObject("msg", "ユーザー名とパスワードを入力：");
+        }
+        System.out.println("==================");
+        System.out.println("ログインしました: ");
+        System.out.println("==================");
+        return mav;
     }
 
     @GetMapping("/register")
-    public ModelAndView register(ModelAndView mav) {
+    public ModelAndView registerInit(ModelAndView mav) {
+        mav.addObject("formModel", new User());
         mav.setViewName("register");
-        mav.addObject("title", "新規登録");
-        mav.addObject("message", "はじめての方はこちらから登録をお願いします。");
-        mav.addObject("formModel", new User()); // ★ これが必要
         return mav;
     }
 

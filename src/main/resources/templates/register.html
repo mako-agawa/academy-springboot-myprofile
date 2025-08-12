@@ -17,7 +17,7 @@
     </header>
 
     <main class="pb-5 container main-content">
-      <h1 th:text="${title}" class="text-center main-title"></h1>
+      <h1 class="text-center main-title">新規登録</h1>
 
       <form th:action="@{/register}" th:object="${formModel}" method="post" novalidate class="form-container">
         <div class="form-group">

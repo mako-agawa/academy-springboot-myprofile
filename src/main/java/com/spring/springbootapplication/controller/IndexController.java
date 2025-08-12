@@ -21,7 +21,6 @@ public class IndexController {
     @GetMapping("/")
     public String index(Model model) {
         List<User> userData = userRepository.findAll();
-        model.addAttribute("title", "Welcome");
         model.addAttribute("users", userData);
         System.out.println("==================");
         System.out.println("Top Page!!");
