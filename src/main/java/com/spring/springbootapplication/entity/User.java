@@ -5,10 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.EqualsAndHashCode;
 import jakarta.validation.constraints.*;
-
 import java.time.OffsetDateTime;
-
 import com.spring.springbootapplication.validation.PasswordPolicy;
+// import com.spring.springbootapplication.validation.UniqueEmail;
 
 @Entity
 @Table(name = "users")
@@ -27,6 +26,7 @@ public class User {
     private String name;
 
     @Column(nullable = false, unique = true, length = 255)
+    // @UniqueEmail(message = "このメールアドレスは既に使用されています")
     @NotBlank(message = "メールアドレスは必ず入力してください")
     @Email(message = "メールアドレスが正しい形式ではありません")
     private String email;

@@ -1,41 +1,37 @@
 package com.spring.springbootapplication.controller;
 
-import java.util.List;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import com.spring.springbootapplication.entity.User;
 import com.spring.springbootapplication.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+
 public class UserController {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder; // ★追加
 
-    public UserController(UserRepository userRepository) {
+    public UserController(UserRepository userRepository,
+            PasswordEncoder passwordEncoder) { // ★追加
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder; // ★追加
     }
 
-    @GetMapping("/")
-    public String index(Model model) {
-        List<User> userData = userRepository.findAll();
-        model.addAttribute("title", "Welcome");
-        model.addAttribute("message", "トップページです。");
-        model.addAttribute("users", userData);
-        System.out.println("==================");
-        System.out.println("Top Page!!");
-        System.out.println("==================");
-        return "index";
+    @GetMapping("/login")
+    public String login() {
+        return "login"; // login.html を返す
+
     }
 
     @GetMapping("/register")
@@ -47,24 +43,6 @@ public class UserController {
         return mav;
     }
 
-    // @PostMapping("/register")
-    // @Transactional // 本当はService層に付けるのが定石
-    // public String form(@ModelAttribute("formModel") @Validated User user) {
-    // if( {
-    // return "register"; // バリデーションエラーがある場合は再表示
-    // }else{
-    // userRepository.save(user); // saveAndFlushは基本不要
-    // System.out.println("==================");
-    // System.out.println("新規登録しました: ");
-    // System.out.println(user.getName());
-    // System.out.println(user.getEmail());
-    // System.out.println(user.getPasswordDigest());
-    // System.out.println("==================");
-    // return "redirect:/";
-    // }
-
-    // }
-
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @Transactional
     public ModelAndView form(@ModelAttribute("formModel") @Validated User user, BindingResult result,
@@ -72,6 +50,10 @@ public class UserController {
         ModelAndView res = null;
         System.out.println(result.getFieldErrors());
         if (!result.hasErrors()) {
+            String raw = user.getPasswordDigest();
+            String hashed = passwordEncoder.encode(raw);
+            user.setPasswordDigest(hashed);
+
             userRepository.save(user);
             System.out.println("==================");
             System.out.println("新規登録しました: ");
