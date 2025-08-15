@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <title>ログインページ</title>
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="/css/layout.css">
     <!-- <link rel="stylesheet" href="/css/login.css"> -->
 </head>
+
 <body>
     <div class="wrapper">
         <header class="header">
@@ -19,17 +21,17 @@
                 <div class="form-container">
                     <div class="form-group">
                         <label for="email">メールアドレス</label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="メールアドレスを入力してください" />
+                        <input type="email" class="form-control" name="email" id="email"
+                            placeholder="メールアドレスを入力してください" />
                     </div>
                     <div class="form-group">
                         <label for="password">パスワード</label>
-                        <input type="password" class="form-control" name="password" id="password" placeholder="パスワードを入力してください"/>
+                        <input type="password" class="form-control" name="password" id="password"
+                            placeholder="パスワードを入力してください" />
                     </div>
+                    <!-- フラッシュメッセージ -->
+                    <div th:if="${errorMessage}" class="text-danger" th:text="${errorMessage}"></div>
 
-                    <!-- ログイン失敗メッセージの表示 -->
-                    <div th:if="${param.error}" class="error-message">
-                        メールアドレスまたはパスワードが間違っています。
-                    </div>
 
                     <div class="button-wrapper">
                         <button type="submit" class="submit-btn">ログインする</button>
@@ -42,6 +44,7 @@
         <footer>
             <div class="footer">portfolio site</div>
         </footer>
-    </div> 
+    </div>
 </body>
+
 </html>

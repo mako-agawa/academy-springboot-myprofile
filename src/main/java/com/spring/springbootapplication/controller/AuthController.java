@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.springbootapplication.entity.User;
 import com.spring.springbootapplication.service.CustomUserDetailsService;
@@ -31,8 +32,16 @@ public class AuthController {
     }
 
     // ログインページ
+    // ログインページ
     @GetMapping("/login")
-    public String login() {
+    public String login(
+            @org.springframework.web.bind.annotation.RequestParam(value = "error", required = false) String error,
+            RedirectAttributes redirectAttributes,
+            Model model) {
+        if (error != null) {
+            // フラッシュメッセージとしてエラーをセット
+            model.addAttribute("errorMessage", "メールアドレス、もしくはパスワードが間違っています");
+        }
         return "auth/login";
     }
 
@@ -51,8 +60,8 @@ public class AuthController {
         if (bindingResult.hasErrors()) {
             return "auth/register";
         }
-        //平文のパスワードを定義
-        String rawPassword = user.getPasswordDigest(); 
+        // 平文のパスワードを定義
+        String rawPassword = user.getPasswordDigest();
         // ユーザー登録
         userDetailsService.registerUser(user);
 
