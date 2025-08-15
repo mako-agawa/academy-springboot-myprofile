@@ -17,14 +17,18 @@
         <div class="nav-item">
           <form action="/auth/logout" method="post">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-            <button type="submit" class="nav-link active">Logout</button>
+            <button type="submit" class="nav-btn">ログアウト</button>
           </form>
         </div>
       </div>
     </header>
 
     <main clas="container main-content">
-      <h1 class="main-title" th:text="'こんにち！ ' + ${currentUserName} + ' さん'"></h1>
+      <div>
+        <image src=""/>        
+        <p class="main-title" th:text="${currentUserName}"></p>
+
+      </div>
 
 
     </main>
