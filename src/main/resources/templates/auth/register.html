@@ -12,7 +12,12 @@
   <div class="wrapper">
     <header>
       <div class="header">
-        <a class="header-logo" th:href="@{/}">My Portfolio</a>
+        <a class="header-logo">My Portfolio</a>
+        <div>
+          <a href="/auth/logout" method="post">
+            <button type="submit" class="nav-btn">ログイン</button>
+          </a>
+        </div>
       </div>
     </header>
 

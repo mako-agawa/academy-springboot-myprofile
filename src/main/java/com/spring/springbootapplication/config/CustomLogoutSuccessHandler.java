@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 
     @Override
+    // ログアウトしたかターミナルに表示
     public void onLogoutSuccess(HttpServletRequest request,
             HttpServletResponse response,
             Authentication authentication)
