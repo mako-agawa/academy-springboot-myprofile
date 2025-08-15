@@ -81,6 +81,10 @@ label {
     
 }
 
+.nav-btn:hover{
+    cursor: pointer;
+}
+
 main {
     flex: 1; /* メイン領域を伸ばしてフッターを下に押す */
 }
@@ -93,6 +97,16 @@ main {
     text-align: center;
     margin: 80px 0 76px 0;
     color: #000000BF;
+}
+
+.thumbnail {
+    width: 360px;
+    height: 360px;
+
+    object-fit: cover;
+    border-radius: 50%;
+    display: block; 
+    
 }
 
 .table-container {
