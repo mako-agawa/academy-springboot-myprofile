@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <title>ログインページ</title>
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="/css/layout.css">
     <!-- <link rel="stylesheet" href="/css/login.css"> -->
 </head>
+
 <body>
     <div class="wrapper">
         <header class="header">
@@ -14,26 +16,26 @@
         </header>
 
         <main class="pb-5 container main-content">
-            <form th:action="@{/login}" method="post">
+            <form th:action="@{/auth/login}" method="post" novalidate>
                 <h1 class="main-title">ログイン</h1>
                 <div class="form-container">
                     <div class="form-group">
                         <label for="email">メールアドレス</label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="メールアドレスを入力してください" />
+                        <input type="email" class="form-control" name="email" id="email"
+                            placeholder="メールアドレスを入力してください" />
                     </div>
                     <div class="form-group">
                         <label for="password">パスワード</label>
-                        <input type="password" class="form-control" name="password" id="password" placeholder="パスワードを入力してください"/>
+                        <input type="password" class="form-control" name="password" id="password"
+                            placeholder="パスワードを入力してください" />
                     </div>
+                    <!-- フラッシュメッセージ -->
+                    <div th:if="${errorMessage}" class="text-danger" th:text="${errorMessage}"></div>
 
-                    <!-- ログイン失敗メッセージの表示 -->
-                    <div th:if="${param.error}" class="error-message">
-                        メールアドレスまたはパスワードが間違っています。
-                    </div>
 
                     <div class="button-wrapper">
                         <button type="submit" class="submit-btn">ログインする</button>
-                        <a href="/register" class="submit-btn">新規登録する</a>
+                        <a href="/auth/register" class="submit-btn">新規登録する</a>
                     </div>
                 </div>
             </form>
@@ -42,6 +44,7 @@
         <footer>
             <div class="footer">portfolio site</div>
         </footer>
-    </div> 
+    </div>
 </body>
+
 </html>

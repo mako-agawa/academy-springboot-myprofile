@@ -14,42 +14,19 @@
     <header>
       <div class="header">
         <a class="header-logo" th:href="@{/}">My Portfolio</a>
-        <nav class="d-flex gap-3">
-          <a th:href="@{/register}" class="header-link" th:classappend="${activePage}=='register' ? ' fw-bold'">Register</a>
-        </nav>
+        <div class="nav-item">
+          <form action="/auth/logout" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <button type="submit" class="nav-link active">Logout</button>
+          </form>
+        </div>
       </div>
     </header>
 
     <main clas="container main-content">
-      <h1 class="main-title">Index Page!!!!</h1>
-      <h2 th:text="${message}">メッセージ</h2>
+      <h1 class="main-title" th:text="'こんにち！ ' + ${currentUserName} + ' さん'"></h1>
 
-      <!-- users が空でなければテーブル表示 -->
-      <div class="table-container" th:if="${users != null and !#lists.isEmpty(users)}">
-        <div class="card-body p-0">
-          <table class="table mb-0">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>E-mail</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr th:each="user : ${users}">
-                <td th:text="${user.id}">1</td>
-                <td th:text="${user.name}">Taro</td>
-                <td th:text="${user.email}">taro@example.com</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
 
-      <!-- 空の場合のプレースホルダ -->
-      <div class="alert alert-secondary mt-4" th:unless="${users != null and !#lists.isEmpty(users)}">
-        ユーザーはまだいません。
-      </div>
     </main>
     <!-- footer -->
     <footer>

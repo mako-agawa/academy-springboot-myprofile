@@ -1,0 +1,5 @@
+services:
+  app:
+    command: ["bash","-lc","tail -f /dev/null"]   # ← 自動でアプリを起動しない
+    environment:
+      SPRING_DEVTOOLS_RESTART_ENABLED: "false"
