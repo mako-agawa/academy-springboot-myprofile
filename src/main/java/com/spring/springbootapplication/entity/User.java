@@ -5,7 +5,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.EqualsAndHashCode;
 import jakarta.validation.constraints.*;
-import java.time.OffsetDateTime;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
 import com.spring.springbootapplication.validation.PasswordPolicy;
 
 
@@ -27,9 +30,8 @@ public class User {
     private String name;
 
     @Column(nullable = false, unique = true, length = 255)
-
     @NotBlank(message = "メールアドレスは必ず入力してください")
-    @Email(message = "メールアドレスが正しい形式ではありません")
+    // @Email(message = "メールアドレスが正しい形式ではありません")
     @Pattern(regexp = "^(?=.*[a-zA-Z])[^\\s@]+@[^\\s@]+\\.[^\\s@]+$", message = "メールアドレスが正しい形式ではありません")//メール形式のバリデーション。「＠や.」が含まれていないとバリデーションされる。
     private String email;
 
@@ -38,6 +40,9 @@ public class User {
     @PasswordPolicy
     private String passwordDigest;
 
+   
+
+
     @Column(columnDefinition = "text")
     private String biography;
 
@@ -45,8 +50,12 @@ public class User {
     private String thumbnailUrl;
 
     @Column(name = "created_at", insertable = false, updatable = false)
-    private OffsetDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
+    
 
     @Column(name = "updated_at", insertable = false, updatable = false)
-    private OffsetDateTime updatedAt;
+    private LocalDateTime upatedAt = LocalDateTime.now();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<LearningData> learningDatas;
 }

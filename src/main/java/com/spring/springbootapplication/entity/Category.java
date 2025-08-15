@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -14,7 +15,7 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private String title;
 
     @Column(name = "created_at")
@@ -23,4 +24,6 @@ public class Category {
     @Column(name = "updated_at")
     private OffsetDateTime updatedAt;
 
+    @OneToMany(mappedBy = "category")
+    private List<LearningData> learningDatas;
 }

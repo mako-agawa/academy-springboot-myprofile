@@ -14,7 +14,7 @@
         </header>
 
         <main class="pb-5 container main-content">
-            <form th:action="@{/login}" method="post">
+            <form th:action="@{/auth/login}" method="post" novalidate>
                 <h1 class="main-title">ログイン</h1>
                 <div class="form-container">
                     <div class="form-group">
@@ -33,7 +33,7 @@
 
                     <div class="button-wrapper">
                         <button type="submit" class="submit-btn">ログインする</button>
-                        <a href="/register" class="submit-btn">新規登録する</a>
+                        <a href="/auth/register" class="submit-btn">新規登録する</a>
                     </div>
                 </div>
             </form>
