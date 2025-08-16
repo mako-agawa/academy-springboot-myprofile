@@ -4,8 +4,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title th:text="${title}">Index</title>
-  <link href="/css/style.css" rel="stylesheet" />
+  <title >Index</title>
+  <link rel="stylesheet" href="https://unpkg.com/ress@4.0.0/dist/ress.min.css">
+
+  <link rel="stylesheet" href="/css/index.css">
 </head>
 
 <body>
@@ -14,25 +16,33 @@
     <header>
       <div class="header">
         <a class="header-logo" th:href="@{/}">My Portfolio</a>
-        <div class="nav-item">
-          <form action="/auth/logout" method="post">
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-            <button type="submit" class="nav-btn">ログアウト</button>
-          </form>
-        </div>
+        <form action="/auth/logout" method="post">
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+          <button type="submit" class="nav-btn">ログアウト</button>
+        </form>
       </div>
     </header>
 
-    <main clas="container main-content">
-      <div>
+    <main class="container main-content">
+      <div class="Profile-container">
         <div class="thumbnail-and-username">
-          <img src="../image/jack.avif" class="thumbnail" />        
-          <p class="main-title" th:text="${currentUserName}"></p>
+          <img src="../image/jack.avif" class="thumbnail" />
+          <p class="user-name" th:text="${currentUserName}"></p>
         </div>
-
+        <div class="biography-container">
+          <h1>自己紹介</h1>
+          <p>自分の自己紹介文章が入ります。自分の自己紹介文章が入ります。自分の自己紹介文章が入ります。自分の自己紹介文章が入ります。自分の自己紹介文章が入ります。</p>
+          <a th:href="@{/profile}" class="profile-edit-btn">自己紹介を編集する</a>
+        </div>
       </div>
+      <div class="learn-container">
+        <p>学習チャート</p>
 
-
+        <a th:href="@{/skill/}" class="learn-edit-btn">編集する</a>
+      </div>
+      <div class="chart-container">
+        <h1>チャートグラフが入ります</h1>
+      </div>
     </main>
     <!-- footer -->
     <footer>

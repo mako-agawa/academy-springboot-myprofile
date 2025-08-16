@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title th:text="${title}">Index</title>
+    <link rel="stylesheet" href="https://unpkg.com/ress@4.0.0/dist/ress.min.css">
+
+    <link rel="stylesheet" href="/css/form.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+            <div class="header">
+                <a class="header-logo" th:href="@{/}">My Portfolio</a>
+                <form action="/auth/logout" method="post">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                    <button type="submit" class="nav-btn">ログアウト</button>
+                </form>
+            </div>
+        </header>
+
+        <main class="pb-5 container main-content">
+            <h1 class="main-title">自分紹介を編集する</h1>
+
+            <form th:action="@{/auth/register}" th:object="${formModel}" method="post" novalidate
+                class="form-container">
+                <div class="form-group">
+                    <label>自己紹介文</label>
+                    <textarea type="text" class="form-control" rows="5" required>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae architecto consequatur ipsa, aliquid itaque est numquam possimus vitae sint praesentium, quis tempora commodi molestias odio eos perspiciatis? Provident, quod qui! Lorem ipsum dolor sit amet consectetur adipisicing</textarea>
+                    <p>50文字以上、200文字以下で入力してください</p>
+                    <div class="text-danger"></div>
+                </div>
+
+                <div class="form-group thumbnail-group">
+                    <label>アバター画像</label>
+                    <button class="thumbnail-btn" >画像ファイルを添付する</button>
+                </div>
+
+
+                <div class="button-wrapper">
+                    <button type="submit" class="submit-btn">登録する</button>
+                </div>
+            </form>
+        </main>
+
+        <!-- footer -->
+        <footer>
+            <div class="footer">portfolio site</div>
+        </footer>
+    </div>
+</body>
+
+</html>

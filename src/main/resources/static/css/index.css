@@ -1,0 +1,330 @@
+:root {
+    /* メインカラー */
+    --color-main: #1B5678;
+    --color-main-dark: #144564;
+
+    /* サブカラー */
+    --color-sub: #FFFFFF;
+
+    /* テキスト */
+    --color-text: ##000000BF;
+    --color-text-light: #0000008A;
+
+    /* 警告・エラー */
+    --color-danger: red;
+}
+
+/* 共通 */
+body,html {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    color: var(--color-text-main);
+}
+
+
+textarea {
+    resize: none;
+}
+
+label {
+    font-size: 12px;
+    color: #0000008A;
+    font-weight: 400;
+}
+
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+/* header */
+.header {
+    max-width: 100%;
+    height: 120px;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--color-main);
+    background-color: #1B5678;
+}
+
+.login-header {
+    max-width: 100%;
+    height: 120px;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-main);
+    background-color: #1B5678;
+}
+
+.header-logo{
+    color: var(--color-sub);
+    font-size: 36px;
+    font-weight: bold;
+}
+
+
+.header-logo:hover {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.header-link {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.nav-btn{
+    width: 170px;
+    height: 53px;
+    font-size: 18px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    background-color: var(--color-sub);
+}
+
+.nav-btn:hover{
+    cursor: pointer;
+}
+
+main {
+    flex: 1; /* メイン領域を伸ばしてフッターを下に押す */
+}
+
+.container {
+    margin: 80px auto 0;
+}
+
+/* メインタイトル */
+.main-title{
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 48px;
+    text-align: center;
+    
+}
+
+
+
+.Profile-container {
+  display: flex;
+  margin: 0px auto ; 
+  align-items: flex-start; /* 上端揃え（必要に応じて center に変更可） */
+  gap: 80px; /* 要素間の余白 */
+  justify-content: center;
+}
+
+.thumbnail-and-username {
+  display: flex;
+  flex-direction: column; /* 画像と名前を縦並び */
+  align-items: center; /* 横方向中央寄せ */
+}
+
+
+.thumbnail {
+    width: 360px;
+    height: 360px;
+
+    object-fit: cover;
+    border-radius: 50%;
+    display: block; 
+    
+}
+.thumbnail {
+    width: 360px;
+    height: 360px;
+
+    object-fit: cover;
+    border-radius: 50%;
+    display: block; 
+    
+}
+
+.thumbnail-and-username{
+    justify-items: center;
+}
+
+.user-name {
+ font-size: 20px;
+    font-weight: 400;
+    margin-top: 10px;
+    height: 57px;
+
+    line-height: 57px; /* 高さと同じにすると縦中央 */
+    text-align: center; /* 横中央にしたい場合 */
+}
+
+
+
+.table-container {
+    width: 100%;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 20px;
+    color: white;
+    background-color: #454546;
+}
+
+.biography-container {
+  width: 520px;
+  height: 256px;
+  margin-top: 52px;
+}
+
+.biography-container h1 {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 48px;
+    text-align: left;
+    width: 240px;
+    padding-bottom: 16px;
+    border-bottom: solid 2px var(--color-text-light);
+    
+}
+
+.biography-container p {
+    width: 520px;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--color-text-main);
+    margin: 32px 0;;
+}
+
+
+.learn-container {
+    max-width: 400px;
+    margin: 0px auto 46px;
+    padding: 0 20px;
+}
+.learn-container p {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 48px;
+    text-align: center;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: solid 2px var(--color-text-light);
+}
+.chart-container{
+    width: 1081px;
+    height: 532px;
+    margin: 0px auto 80px;
+    background-color: #ee9f50;
+    color:var(--color-sub);
+    display: flex;
+    justify-content: center; /* 横方向中央 */
+    align-items: center;     /* 縦方向中央 */
+    text-align: center;
+}
+
+/* チャートセクション */
+.lear-chart-text{
+    font-size: 36px;
+    font-weight: 700;
+    padding: 0 92px 16px;
+    border-bottom: solid 2px var(--color-text-light);
+    text-align: center;
+}
+
+
+/* 送信ボタン */
+
+
+.submit-btn{
+    width: 232px;
+    height: 53px;
+    font-size: 18px;
+    margin: 0 auto;
+    margin-top: 48px;
+    border-radius: 4px;
+    border: none;
+    color: #FFFFFF;
+    background-color: #1B5678;
+
+    display: flex;             /* Flexboxにする */
+    justify-content: center;   /* 横方向中央 */
+    align-items: center;       /* 縦方向中央 */
+    text-decoration: none;     
+}
+.submit-btn:hover {
+    background-color: #144564;
+    cursor: pointer;
+}
+
+.profile-edit-btn{
+    width: 242px;
+    height: 53px;
+    font-size: 18px;
+    border-radius: 4px;
+    border: none;
+    color: #FFFFFF;
+    background-color: #1B5678;
+
+    display: flex;             /* Flexboxにする */
+    justify-content: center;   /* 横方向中央 */
+    align-items: center;       /* 縦方向中央 */
+    text-decoration: none;     
+}
+.learn-edit-btn:hover {
+    background-color: #144564;
+    cursor: pointer;
+}
+
+.learn-edit-btn{
+    width: 153px;
+    height: 53px;
+    font-size: 18px;
+    margin: 48px auto 0;
+    border-radius: 4px;
+    border: none;
+    color: #FFFFFF;
+    background-color: #1B5678;
+
+    display: flex;             /* Flexboxにする */
+    justify-content: center;   /* 横方向中央 */
+    align-items: center;       /* 縦方向中央 */
+    text-decoration: none;     
+}
+.learn-edit-btn:hover {
+    background-color: #144564;
+    cursor: pointer;
+}
+
+
+/* footer */
+.footer {
+    height: 40px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-sub);
+    background-color: var(--color-main);
+}
+
+/* 無効 */
+.submit-btn:link,   
+.submit-btn:visited {
+    text-decoration: none;  
+    color: #FFFFFF;  
+}
+
+a
+{
+    text-decoration: none;  
+}
+
+.text-danger {
+    margin-top: 5px;
+    color: red;  
+} 

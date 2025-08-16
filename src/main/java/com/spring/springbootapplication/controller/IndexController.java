@@ -29,8 +29,10 @@ public class IndexController {
 
         model.addAttribute("title", "Welcome");
         model.addAttribute("currentUserName", loggedInUser.getName());
+        model.addAttribute("currentUserBio", loggedInUser.getBiography());
         System.out.println("==================");
         System.out.println("loggedInUser:" + loggedInUser.getName());
+        System.out.println("currentUserBio:" + loggedInUser.getBiography());
         System.out.println("==================");
         return "index";
     }
