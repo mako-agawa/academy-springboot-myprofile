@@ -22,7 +22,6 @@ body,html {
     margin: 0;
     padding: 0;
     height: 100vh;
-
     color: var(--color-text);
 }
 
@@ -91,7 +90,7 @@ label {
 }
 
 .nav-btn{
-    width: 152px;
+    width: 170px;
     height: 53px;
     font-size: 18px;
     border: none;
@@ -99,7 +98,7 @@ label {
     justify-content: center;
     align-items: center;
     border-radius: 4px;
-    
+    color: var(--color-text);
     background-color: var(--color-sub);
 }
 .nav-btn:hover{
