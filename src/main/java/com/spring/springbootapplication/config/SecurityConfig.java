@@ -22,7 +22,7 @@ public class SecurityConfig {
                                                 .requestMatchers(
                                                                 "/css/**", "/js/**", "/images/**", "/webjars/**",
                                                                 "/uploads/**",
-                                                                "/error", "/error/**", "/debug/**")
+                                                                "/error", "/error/**", "/debug/**", "/profile")
                                                 .permitAll()
                                                 .requestMatchers(
                                                                 "/auth/login",

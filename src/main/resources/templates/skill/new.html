@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title th:text="${title}">My Profile</title>
+  <link href="/css/style.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/detail.css">
+</head>
+
+<body>
+  <div class="wrapper">
+    <header>
+      <div class="header">
+        <a class="header-logo">My Portfolio</a>
+        <div>
+          <a href="/auth/logout" method="post">
+            <button type="submit" class="nav-btn">ログイン</button>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="pb-5 container main-content">
+      <h1 class="text-center main-title">{カテゴリー名}に項目を追加</h1>
+
+      <form th:action="@{/skill/new}" th:object="${formModel}" method="post" novalidate class="form-container">
+        <div class="form-group">
+          <label>項目名</label>
+          <input type="text" class="form-control" th:field="*{title}" required>
+          <div class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+        </div>
+
+        <div class="form-group">
+          <label>学習時間</label>
+          <input type="time-record" class="form-control" th:field="*{time-record}" required>
+          <div class="text-danger" th:if="${#fields.hasErrors('time-record')}" th:errors="*{time-record}"></div>
+          <p class="form-text">分単位で入力してください</p>
+        </div>
+
+
+
+
+        <div class="button-wrapper">
+          <button type="submit" class="submit-btn">追加する</button>
+        </div>
+      </form>
+    </main>
+
+    <!-- footer -->
+    <footer>
+      <div class="footer">portfolio site</div>
+    </footer>
+  </div>
+</body>
+
+</html>
