@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.EqualsAndHashCode;
 import jakarta.validation.constraints.*;
-
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -52,7 +52,8 @@ public class User {
     @Column(name = "updated_at", insertable = false, updatable = false)
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference("user-learning")
     private List<LearningData> learningDatas;
 
 }
