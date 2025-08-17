@@ -7,6 +7,8 @@ import lombok.Setter;
 import java.time.OffsetDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Getter
 @Setter
@@ -24,6 +26,7 @@ public class Category {
     @Column(name = "updated_at")
     private OffsetDateTime updatedAt;
 
+    @JsonManagedReference("category-learning")
     @OneToMany(mappedBy = "category")
     private List<LearningData> learningDatas;
 }

@@ -1,10 +1,9 @@
 package com.spring.springbootapplication.entity;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import org.hibernate.annotations.ManyToAny;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -41,10 +40,12 @@ public class LearningData {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = true)
+    @JsonBackReference("user-learning")
     private User user;
 
+    @JsonBackReference("category-learning")
     @ManyToOne
-    @JoinColumn(name = "category_id", nullable = true)
+    @JoinColumn(name = "category_id")
     private Category category;
 
     @Column(name = "created_at", insertable = false, updatable = false)

@@ -34,11 +34,6 @@ public class IndexController {
                     "/image/default-avatar.avif");
         }
 
-        System.out.println("==================");
-        System.out.println("loggedInUser:" + loggedInUser.getName());
-        System.out.println("currentUserBio:" + loggedInUser.getBiography());
-        System.out.println("thumbnailUrl:" + model.getAttribute("thumbnailUrl"));
-        System.out.println("==================");
         return "index";
     }
 }

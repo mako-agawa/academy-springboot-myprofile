@@ -5,8 +5,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>Index</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+  <script src="/script/learning-chart.js" defer></script>
   <link rel="stylesheet" href="https://unpkg.com/ress@4.0.0/dist/ress.min.css">
-
   <link rel="stylesheet" href="/css/index.css">
 </head>
 
@@ -26,8 +27,7 @@
     <main class="container main-content">
       <div class="Profile-container">
         <div class="thumbnail-and-username">
-          <img th:src="${thumbnailUrl} ?: '/image/default-avatar.avif'"
-     alt="avatar" class="thumbnail"/>
+          <img th:src="${thumbnailUrl} ?: '/image/default-avatar.avif'" alt="avatar" class="thumbnail" />
           <p class="user-name" th:text="${currentUserName}"></p>
         </div>
         <div class="biography-container">
@@ -42,7 +42,9 @@
         <a th:href="@{/skill/}" class="learn-edit-btn">編集する</a>
       </div>
       <div class="chart-container">
-        <h1>チャートグラフが入ります</h1>
+        <!-- <h1>チャートグラフが入ります</h1> -->
+        <canvas id="myChart"></canvas>
+
       </div>
     </main>
     <!-- footer -->
