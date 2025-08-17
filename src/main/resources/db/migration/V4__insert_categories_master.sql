@@ -1,5 +1,5 @@
 INSERT INTO categories (title)
 VALUES
-  ('フロントエンド'),
   ('バックエンド'),
+  ('フロントエンド'),
   ('インフラ');

@@ -5,8 +5,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>Data</title>
-  <link rel="stylesheet" href="https://unpkg.com/ress@4.0.0/dist/ress.min.css">
 
+  <link rel="stylesheet" href="https://unpkg.com/ress@4.0.0/dist/ress.min.css">
   <link rel="stylesheet" href="/css/index.css">
 </head>
 
@@ -26,13 +26,13 @@
     <div class="container my-4">
       <!-- Categories -->
 
-      <select name="example">
+      <select class="pull-douwn">
         <option>選択肢のサンプル1</option>
         <option>選択肢のサンプル2</option>
         <option>選択肢のサンプル3</option>
       </select>
       <div class="card mb-4">
-        <div class="card-body">
+        <div class="skill-container">
           <h2 class="h4 mb-3">バックエンド</h2>
 
           <div th:if="${#lists.isEmpty(categories)}" class="text-muted">カテゴリがありません。</div>
@@ -47,7 +47,7 @@
 
       <!-- Categories -->
       <div class="card mb-4">
-        <div class="card-body">
+        <div class="skill-container">
           <h2 class="h4 mb-3">フロントエンド</h2>
 
           <div th:if="${#lists.isEmpty(categories)}" class="text-muted">カテゴリがありません。</div>
@@ -62,7 +62,7 @@
 
       <!-- Categories -->
       <div class="card mb-4">
-        <div class="card-body">
+        <div class="skill-container">
           <h2 class="h4 mb-3">インフラ</h2>
 
           <div th:if="${#lists.isEmpty(categories)}" class="text-muted">カテゴリがありません。</div>
