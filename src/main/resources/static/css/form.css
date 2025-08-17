@@ -128,15 +128,7 @@ main {
     display: block; 
     
 }
-.thumbnail {
-    width: 360px;
-    height: 360px;
 
-    object-fit: cover;
-    border-radius: 50%;
-    display: block; 
-    
-}
 
 .thumbnail-and-username{
     justify-items: center;
@@ -169,6 +161,7 @@ main {
 .form-group{
     display: flex;
     flex-direction: column;
+    
     margin-top: 48px;
 }
 
@@ -213,30 +206,43 @@ main {
 }
 
 .thumbnail-group {
-    display: flex;
+    /* display: flex; */
     justify-content: left;  
     align-items: left;
     margin-top: 48px;
 }
 
-
-
-
 .thumbnail-btn {
     width: 202px;
     height: 32px;
     font-size: 14px;
-    margin: 0 auto;
-
     border-radius: 4px;
     border: none;
     color: var(--color-text);
     background-color: var(--color-gray);
-
-    display: flex;             /* Flexboxにする */
-    justify-content: center;   /* 横方向中央 */
-    align-items: center;       /* 縦方向中央 */
+    display: flex;           
+    justify-content: center;   
+    align-items: center;   
+    cursor: pointer;    
 }
+
+/* input を完全に隠す */
+.d-none {
+  display: none;
+}
+
+  #file-label::after {
+    content: attr(data-file-name);
+    margin-left: 8px;
+    font-size: 0.9em;
+    color: #555;
+  }
+
+  .file-btn-wrapper{
+    display: flex;
+    align-items:center;
+}
+
 
 
 

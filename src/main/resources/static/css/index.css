@@ -140,15 +140,6 @@ main {
     display: block; 
     
 }
-.thumbnail {
-    width: 360px;
-    height: 360px;
-
-    object-fit: cover;
-    border-radius: 50%;
-    display: block; 
-    
-}
 
 .thumbnail-and-username{
     justify-items: center;

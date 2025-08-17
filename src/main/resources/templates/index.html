@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title >Index</title>
+  <title>Index</title>
   <link rel="stylesheet" href="https://unpkg.com/ress@4.0.0/dist/ress.min.css">
 
   <link rel="stylesheet" href="/css/index.css">
@@ -26,12 +26,13 @@
     <main class="container main-content">
       <div class="Profile-container">
         <div class="thumbnail-and-username">
-          <img src="../image/defaultThumbnail.avif" class="thumbnail" />
+          <img th:src="${thumbnailUrl} ?: '/image/default-avatar.avif'"
+     alt="avatar" class="thumbnail"/>
           <p class="user-name" th:text="${currentUserName}"></p>
         </div>
         <div class="biography-container">
           <h1>自己紹介</h1>
-          <p>自分の自己紹介文章が入ります。自分の自己紹介文章が入ります。自分の自己紹介文章が入ります。自分の自己紹介文章が入ります。自分の自己紹介文章が入ります。</p>
+          <p th:text="${currentUserBio}"></p>
           <a th:href="@{/profile}" class="profile-edit-btn">自己紹介を編集する</a>
         </div>
       </div>

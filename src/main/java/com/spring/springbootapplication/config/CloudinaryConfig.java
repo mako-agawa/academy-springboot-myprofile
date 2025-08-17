@@ -1,28 +1,37 @@
+// src/main/java/.../config/CloudinaryConfig.java
 package com.spring.springbootapplication.config;
 
 import com.cloudinary.Cloudinary;
-import com.cloudinary.Transformation;
-import com.cloudinary.Url;
 
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class CloudinaryConfig {
+    
     @Bean
-    public Cloudinary cloudinary() {
-        // 環境変数 CLOUDINARY_URL=cloudinary://API_KEY:API_SECRET@CLOUD_NAME を自動読込
-        return new Cloudinary();
+    Cloudinary cloudinary(
+            // ← 空でも起動できるようにデフォルト空文字を入れる
+            @Value("${cloudinary.url:}") String cloudinaryUrl,
+            @Value("${cloudinary.cloud-name:}") String cloudName) {
 
+        if (cloudinaryUrl != null && !cloudinaryUrl.isBlank() && !cloudinaryUrl.contains("${")) {
+            // パターン1: CLOUDINARY_URL から作成（推奨）
+            return new Cloudinary(cloudinaryUrl);
+        }
+
+        if (cloudName == null || cloudName.isBlank()) {
+            // どっちも無いなら、わかりやすいメッセージで失敗させる
+            throw new IllegalStateException(
+                "Cloudinary configuration missing. Set CLOUDINARY_URL or cloudinary.url in properties " +
+                "(and/or CLOUDINARY_CLOUD_NAME for URL builder).");
+        }
+        // パターン2: URLが無い場合は cloud_name のみで（署名不要の配信URL生成用）
+        return new Cloudinary(Map.of("cloud_name", cloudName));
     }
 
-    public String avatarUrlTransformed(String publicId, Cloudinary cloudinary) {
-        Url url = cloudinary.url()
-                .resourceType("image")
-                .transformation(new Transformation()
-                        .width(300).crop("scale")
-                        .fetchFormat("auto") // f_auto
-                        .quality("auto")); // q_auto
-        return url.generate(publicId);
-    }
+
 }
