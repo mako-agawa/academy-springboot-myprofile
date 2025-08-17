@@ -55,13 +55,4 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<LearningData> learningDatas;
 
-    /** 画面表示用の計算プロパティ（DB保存しない） */
-    @Transient
-    public String getThumbnailUrl() {
-        if (thumbnailPublicId == null)
-            return "/images/default-avatar.png";
-        // そのまま配信（最適化/変換は後述の方法で）
-        return "https://res.cloudinary.com/" + System.getenv("CLOUDINARY_CLOUD_NAME")
-                + "/image/upload/" + thumbnailPublicId + ".jpg";
-    }
 }
