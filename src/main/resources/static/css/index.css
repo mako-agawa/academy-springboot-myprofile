@@ -211,7 +211,7 @@ main {
     width: 1081px;
     height: 532px;
     margin: 0px auto 80px;
-    background-color: #ee9f50;
+
     color:var(--color-sub);
     display: flex;
     justify-content: center; /* 横方向中央 */
