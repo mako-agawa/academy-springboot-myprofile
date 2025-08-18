@@ -79,6 +79,7 @@ label {
     justify-content: center;
     align-items: center;
     border-radius: 4px;
+    color: var(--color-text);
     background-color: var(--color-sub);
 }
 
