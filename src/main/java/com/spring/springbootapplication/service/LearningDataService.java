@@ -16,7 +16,7 @@ public class LearningDataService {
     public LearningDataService(LearningDataRepository learningDataRepository) {
         this.learningDataRepository = learningDataRepository;
     }
-
+    
     public List<LearningData> getLearningDataByCategoryAndMonth(Long userId, Long categoryId, YearMonth month) {
         LocalDateTime startOfMonth = month.atDay(1).atStartOfDay();
         LocalDateTime endOfMonth = month.atEndOfMonth().atTime(23, 59, 59);

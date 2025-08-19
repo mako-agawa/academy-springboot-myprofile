@@ -20,9 +20,6 @@ public class UserService {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
             String email = ((UserDetails) principal).getUsername();
-            System.out.println("===================");
-            System.out.println(".getCurrentUser()  ");
-            System.out.println("===================");
             return userRepository.findByEmail(email).orElseThrow();
         }
         throw new IllegalStateException();

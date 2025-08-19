@@ -18,9 +18,9 @@
 
 .dropdown {
   position: absolute;
-  width: 250px;
-  box-shadow: var(--shadow);
-  border-radius: var(--radius);
+  width: 94px;
+  border: 0.5px solid #000000BF;
+  border-radius: 4px;
   margin-top: 0.3rem;
   background: white;
 
@@ -30,11 +30,13 @@
   transition: all 0.1s cubic-bezier(0.16, 1, 0.5, 1);
 }
 
+
 .dropdown a {
+  
   display: flex;
   align-items: center;
   column-gap: var(--gap);
-  padding: 0.8rem 1rem;
+  padding: 8px;
   text-decoration: none;
   color: black;
 }
@@ -50,7 +52,14 @@
   transform: translateY(0rem);
 }
 
+
+
 .arrow {
-  transform: rotate(180deg);
   transition: 0.2s ease;
+}
+
+#arrow {
+  display: inline-block;
+  margin-left: 0.5rem;
+  transition: transform 0.2s ease;
 }

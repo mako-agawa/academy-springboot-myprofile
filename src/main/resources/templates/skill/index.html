@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://unpkg.com/ress@4.0.0/dist/ress.min.css">
   <link rel="stylesheet" href="/css/skill.css">
   <link rel="stylesheet" href="/css/pulldown.css">
+
   <script src="/script/pulldown.js" defer></script>
 </head>
 
@@ -26,36 +27,19 @@
 
   <main class="container">
 
-    <!-- <label class="select-box">
-      <form th:action="@{/skill}" method="get" class="select-box">
-        <select id="selectMonth" name="month" class="pull-down">
-          <option th:value="${currentMonthValue}" th:text="${currentMonthLabel}"></option>
-          <option th:value="${lastMonthValue}" th:text="${lastMonthLabel}"></option>
-          <option th:value="${twoMonthsAgoValue}" th:text="${twoMonthsAgoLabel}"></option>
-        </select>
-        <button type="submit">表示</button>
-      </form>
-      <span class="arrow">▼</span>
-    </label> -->
-
-    <div  class="select-box">
-      <button class="btn" id="btn" th:text="${targetMonthLabel}">
-        
-        <i class="arrow" id="arrow">▼</i>
+    <div class="select-box">
+      <button class="btn" id="btn">
+        <span class="selectd-month" th:text="${targetMonthLabel}"></span>
+        <span class="arrow" id="arrow">▼</span>
       </button>
-
       <div class="dropdown" id="dropdown">
-        <a th:value="${currentMonthValue}" th:text="${currentMonthLabel}" th:href="@{/skill(month=${currentMonthValue})}">
-          <i class="bx bx-book"></i>
-          
+        <a th:value="${currentMonthValue}" th:text="${currentMonthLabel}"
+          th:href="@{/skill(month=${currentMonthValue})}">
         </a>
         <a th:value="${lastMonthValue}" th:text="${lastMonthLabel}" th:href="@{/skill(month=${lastMonthValue})}">
-          <i class="bx bx-plus-circle"></i>
-          
         </a>
-        <a th:value="${twoMonthsAgoValue}" th:text="${twoMonthsAgoLabel}" th:href="@{/skill(month=${twoMonthsAgoValue})}">
-          <i class="bx bx-folder"></i>
-          
+        <a th:value="${twoMonthsAgoValue}" th:text="${twoMonthsAgoLabel}"
+          th:href="@{/skill(month=${twoMonthsAgoValue})}">
         </a>
       </div>
     </div>
@@ -77,8 +61,10 @@
               <div class="skill-name">
                 <p th:text="${backEndData.title}"></p>
               </div>
-              <input class="skill-time" type="number" min="0" th:value="${backEndData.timeRecord}" />
-              <button class="skill-time-submit-btn">学習時間を保存する</button>
+              <div class="input-button-wrapper">
+                <input class="skill-time" type="number" min="0" th:value="${backEndData.timeRecord}" />
+                <button type="submit" class="skill-time-submit-btn">学習時間を保存する</button>
+              </div>
               <form action="/skill/delete" method="post" class="search-form">
                 <button type="submit" class="skill-delete-btn">削除する</button>
               </form>

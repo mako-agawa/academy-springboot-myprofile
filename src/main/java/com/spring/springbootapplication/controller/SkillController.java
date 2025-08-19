@@ -48,9 +48,8 @@ public class SkillController {
         YearMonth targetMonth = (monthParam == null) ? YearMonth.now() : YearMonth.parse(monthParam);
 
         int targetMonthLabel = targetMonth.getMonthValue();
-        System.out.println("==========================");
+
         System.out.println("targetMonthLabel: " + targetMonthLabel);
-        System.out.println("==========================");
 
         // セレクトボックス用に "2025-08" と "8月" を両方渡す
         model.addAttribute("currentMonthValue", YearMonth.now().toString()); // 2025-08
