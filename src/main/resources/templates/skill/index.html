@@ -7,7 +7,9 @@
   <title>Data</title>
 
   <link rel="stylesheet" href="https://unpkg.com/ress@4.0.0/dist/ress.min.css">
-  <link rel="stylesheet" href="/css/index.css">
+  <link rel="stylesheet" href="/css/skill.css">
+  <link rel="stylesheet" href="/css/pulldown.css">
+  <script src="/script/pulldown.js" defer></script>
 </head>
 
 <body>
@@ -22,61 +24,124 @@
     </div>
   </header>
 
-  <main class="container main-content">
-    <div class="container my-4">
-      <!-- Categories -->
+  <main class="container">
 
-      <select class="pull-douwn">
-        <option>選択肢のサンプル1</option>
-        <option>選択肢のサンプル2</option>
-        <option>選択肢のサンプル3</option>
-      </select>
-      <div class="card mb-4">
-        <div class="skill-container">
-          <h2 class="h4 mb-3">バックエンド</h2>
+    <!-- <label class="select-box">
+      <form th:action="@{/skill}" method="get" class="select-box">
+        <select id="selectMonth" name="month" class="pull-down">
+          <option th:value="${currentMonthValue}" th:text="${currentMonthLabel}"></option>
+          <option th:value="${lastMonthValue}" th:text="${lastMonthLabel}"></option>
+          <option th:value="${twoMonthsAgoValue}" th:text="${twoMonthsAgoLabel}"></option>
+        </select>
+        <button type="submit">表示</button>
+      </form>
+      <span class="arrow">▼</span>
+    </label> -->
 
-          <div th:if="${#lists.isEmpty(categories)}" class="text-muted">カテゴリがありません。</div>
+    <div  class="select-box">
+      <button class="btn" id="btn" th:text="${targetMonthLabel}">
+        
+        <i class="arrow" id="arrow">▼</i>
+      </button>
 
-          <ul th:if="${!#lists.isEmpty(categories)}" class="list-group">
-            <li class="list-group-item" th:each="c : ${categories}">
-              <span th:text="${c.title}">サンプルカテゴリ</span>
-            </li>
-          </ul>
-        </div>
+      <div class="dropdown" id="dropdown">
+        <a th:value="${currentMonthValue}" th:text="${currentMonthLabel}" th:href="@{/skill(month=${currentMonthValue})}">
+          <i class="bx bx-book"></i>
+          
+        </a>
+        <a th:value="${lastMonthValue}" th:text="${lastMonthLabel}" th:href="@{/skill(month=${lastMonthValue})}">
+          <i class="bx bx-plus-circle"></i>
+          
+        </a>
+        <a th:value="${twoMonthsAgoValue}" th:text="${twoMonthsAgoLabel}" th:href="@{/skill(month=${twoMonthsAgoValue})}">
+          <i class="bx bx-folder"></i>
+          
+        </a>
       </div>
-
-      <!-- Categories -->
-      <div class="card mb-4">
-        <div class="skill-container">
-          <h2 class="h4 mb-3">フロントエンド</h2>
-
-          <div th:if="${#lists.isEmpty(categories)}" class="text-muted">カテゴリがありません。</div>
-
-          <ul th:if="${!#lists.isEmpty(categories)}" class="list-group">
-            <li class="list-group-item" th:each="c : ${categories}">
-              <span th:text="${c.title}">サンプルカテゴリ</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Categories -->
-      <div class="card mb-4">
-        <div class="skill-container">
-          <h2 class="h4 mb-3">インフラ</h2>
-
-          <div th:if="${#lists.isEmpty(categories)}" class="text-muted">カテゴリがありません。</div>
-
-          <ul th:if="${!#lists.isEmpty(categories)}" class="list-group">
-            <li class="list-group-item" th:each="c : ${categories}">
-              <span th:text="${c.title}">サンプルカテゴリ</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-
     </div>
+
+
+    <div class="">
+      <div class="skill-container">
+        <div class="skill-nav">
+          <p class="skill-title">バックエンド</p>
+          <button class="skill-add-btn" th:href="@{/skill/new}">項目を追加する</button>
+        </div>
+        <div class="skill-list-container">
+          <div class="skill-list-header">
+            <p class="skill-list-header-name">項目名</p>
+            <p class="skill-list-header-time">学習時間</p>
+          </div>
+          <ul class="skill-list">
+            <li th:each="backEndData, stat : ${backEndLearningDatas}" class="skill-item">
+              <div class="skill-name">
+                <p th:text="${backEndData.title}"></p>
+              </div>
+              <input class="skill-time" type="number" min="0" th:value="${backEndData.timeRecord}" />
+              <button class="skill-time-submit-btn">学習時間を保存する</button>
+              <form action="/skill/delete" method="post" class="search-form">
+                <button type="submit" class="skill-delete-btn">削除する</button>
+              </form>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="">
+      <div class="skill-container">
+        <div class="skill-nav">
+          <p class="skill-title">フロントエンド</p>
+          <button class="skill-add-btn" th:href="@{/skill/new}">項目を追加する</button>
+        </div>
+        <div class="skill-list-container">
+          <div class="skill-list-header">
+            <p class="skill-list-header-name">項目名</p>
+            <p class="skill-list-header-time">学習時間</p>
+          </div>
+          <ul class="skill-list">
+            <li th:each="frontEndData, stat : ${frontEndLearningDatas}" class="skill-item">
+              <div class="skill-name">
+                <p th:text="${frontEndData.title}"></p>
+              </div>
+              <input class="skill-time" type="number" min="0" th:value="${frontEndData.timeRecord}" />
+              <button class="skill-time-submit-btn">学習時間を保存する</button>
+              <form action="/skill/delete" method="post" class="search-form">
+                <button type="submit" class="skill-delete-btn">削除する</button>
+              </form>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="">
+      <div class="skill-container">
+        <div class="skill-nav">
+          <p class="skill-title">インフラ</p>
+          <button class="skill-add-btn" th:href="@{/skill/new}">項目を追加する</button>
+        </div>
+        <div class="skill-list-container">
+          <div class="skill-list-header">
+            <p class="skill-list-header-name">項目名</p>
+            <p class="skill-list-header-time">学習時間</p>
+          </div>
+          <ul class="skill-list">
+            <li th:each="infraData, stat : ${infraLearningDatas}" class="skill-item">
+              <div class="skill-name">
+                <p th:text="${infraData.title}"></p>
+              </div>
+              <input class="skill-time" type="number" min="0" th:value="${infraData.timeRecord}" />
+              <button class="skill-time-submit-btn">学習時間を保存する</button>
+              <form action="/skill/delete" method="post" class="search-form">
+                <button type="submit" class="skill-delete-btn">削除する</button>
+              </form>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
   </main>
   <footer>
     <div class="footer">portfolio site</div>
