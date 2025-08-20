@@ -32,9 +32,10 @@ public class LearningData {
     @NotBlank(message = "名前は必ず入力してください")
     private String title;
 
+    @Column(name = "time_record", nullable = false)    
     private int timeRecord;
 
-    @Column(name = "learning_date")
+    @Column(name = "learning_date", nullable = false)
     private LocalDateTime learningDate;
 
     @ManyToOne
@@ -56,7 +57,6 @@ public class LearningData {
     @PrePersist // ← PerPersist ではなく PrePersist
     public void onCreate() {
         createdAt = LocalDateTime.now(); // ← now() はメソッド呼び出し
-        learningDate = createdAt; // 作成時は同じ値にしておく
         updatedAt = createdAt; // 作成時は同じ値にしておく
     }
 

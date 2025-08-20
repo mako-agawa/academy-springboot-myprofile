@@ -171,12 +171,10 @@ main {
     justify-content: space-between;
     align-content: center;
     margin-bottom: 32px;
-    
-
 }
 
 
-.skill-add-btn{
+.skill-add-btn-wrapper{
     width: 178px;
     height: 48px;
     font-weight: 400;
@@ -187,7 +185,15 @@ main {
     background-color: #1B5678;
     text-decoration: none;     
 }
-.skill-add-btn:hover {
+
+.skill-add-btn-wrapper a {
+    color: #FFFFFF;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.skill-add-btn-wrapper:hover {
     background-color: #144564;
     cursor: pointer;
 }

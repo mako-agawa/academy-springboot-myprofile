@@ -6,14 +6,14 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title th:text="${title}">My Profile</title>
   <link href="/css/style.css" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/detail.css">
+  <link rel="stylesheet" href="/css/form.css">
 </head>
 
 <body>
   <div class="wrapper">
     <header>
       <div class="header">
-        <a class="header-logo">My Portfolio</a>
+        <a class="header-logo" th:href="@{/}">My Portfolio</a>
         <div>
           <a href="/auth/logout" method="post">
             <button type="submit" class="nav-btn">ログイン</button>
@@ -23,24 +23,26 @@
     </header>
 
     <main class="pb-5 container main-content">
-      <h1 class="text-center main-title">{カテゴリー名}に項目を追加</h1>
+      <h1 class="text-center main-title" th:text="${selectedCategory} + 'に項目を追加'"></h1>
 
-      <form th:action="@{/skill/new}" th:object="${formModel}" method="post" novalidate class="form-container">
+      <form th:action="@{/skill/new(month=${targetMonthValue})}" th:object="${skillformModel}" method="post" novalidate
+        class="form-container">
+
+        <input type="hidden" th:field="*{userId}" th:value="${user.id}" />
+        <input type="hidden" th:field="*{categoryId}" th:value="${selectedCategoryId}" />
+        <input type="hidden" th:field="*{learningDate}"
+          th:value="${#temporals.format(skillformModel.learningDate,'yyyy-MM')}" />
+
         <div class="form-group">
           <label>項目名</label>
-          <input type="text" class="form-control" th:field="*{title}" required>
-          <div class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+          <input type="text" th:field="*{title}" class="form-control" required>
         </div>
 
         <div class="form-group">
           <label>学習時間</label>
-          <input type="time-record" class="form-control" th:field="*{time-record}" required>
-          <div class="text-danger" th:if="${#fields.hasErrors('time-record')}" th:errors="*{time-record}"></div>
-          <p class="form-text">分単位で入力してください</p>
+          <input type="number" th:field="*{timeRecord}" class="form-control" min="0" required>
+          <p class="skill-form-text">分単位で入力してください</p>
         </div>
-
-
-
 
         <div class="button-wrapper">
           <button type="submit" class="submit-btn">追加する</button>
