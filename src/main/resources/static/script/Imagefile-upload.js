@@ -2,10 +2,9 @@ const input = document.getElementById("thumbnail");
 const label = document.getElementById("file-label");
 const hiddenPublicId = document.getElementById("thumbnailPublicId");
 
-const uploadPreset = "unsigned_preset_123"; 
 
 input.addEventListener("change", async () => {
-    console.log(cloudinaryCloudName);
+    console.log("Imagefile-upload.js loaded");
     if (input.files.length > 0) {
         const file = input.files[0];
 
@@ -20,7 +19,7 @@ input.addEventListener("change", async () => {
 
         const formData = new FormData();
         formData.append("file", file);
-        formData.append("upload_preset", uploadPreset);
+        formData.append("upload_preset", cloudinaryUploadPreset);
 
         try {
             const res = await fetch(
@@ -37,6 +36,7 @@ input.addEventListener("change", async () => {
                 return;
             }
             hiddenPublicId.value = data.public_id;
+            console.log("アップロード成功", data);
             document.getElementById("thumbnailName").value = file.name;
             label.textContent = file.name;
         } catch (err) {
