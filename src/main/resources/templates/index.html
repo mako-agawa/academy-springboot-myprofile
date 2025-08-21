@@ -27,7 +27,9 @@
     <main class="container main-content">
       <div class="Profile-container">
         <div class="thumbnail-and-username">
-          <img th:src="${thumbnailUrl} ?: '/image/default-avatar.avif'" alt="avatar" class="thumbnail" />
+          <div class="thumbnail-container">
+            <img th:src="${thumbnailUrl} ?: '/image/default-avatar.avif'" alt="avatar" class="thumbnail" />
+          </div>
           <p class="user-name" th:text="${currentUserName}"></p>
         </div>
         <div class="biography-container">

@@ -175,24 +175,26 @@ main {
 
 
 .skill-add-btn-wrapper{
-    width: 178px;
-    height: 48px;
-    font-weight: 400;
-    font-size: 14px;
     border-radius: 4px;
     border: none;
-    color: #FFFFFF;
+    display: flex;
     background-color: #1B5678;
-    text-decoration: none;     
+
 }
 
 .skill-add-btn-wrapper a {
     color: #FFFFFF;
     text-decoration: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 178px;
+    height: 48px;
+    font-weight: 400;
+    font-size: 14px;
+
+    display: flex;               /* 追加 */
+    justify-content: center;     /* 横中央 */
+    align-items: center;   
 }
+
 .skill-add-btn-wrapper:hover {
     background-color: #144564;
     cursor: pointer;

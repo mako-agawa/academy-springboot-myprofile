@@ -250,7 +250,11 @@ main {
     align-items:center;
 }
 
-
+.file-name {
+    margin-left: 8px;
+    font-size: 14px;
+    color: #0000008A;
+}
 
 
 /* footer */

@@ -48,6 +48,7 @@ public class SkillController {
 
         YearMonth targetMonth = (monthParam == null) ? YearMonth.now() : YearMonth.parse(monthParam);
         model.addAttribute("targetMonthLabel", targetMonth.getMonthValue() + "月");
+        model.addAttribute("targetMonth", targetMonth);
 
         model.addAttribute("currentMonthValue", YearMonth.now().toString());
         model.addAttribute("currentMonthLabel", YearMonth.now().getMonthValue() + "月");
@@ -70,23 +71,22 @@ public class SkillController {
         return "skill/index";
     }
 
+    // 新規スキル登録画面表示
     @GetMapping("/skill/new")
-    public String newSkill(@RequestParam(value = "category", required = true) String categoryTitle,
-            @RequestParam(value = "month", required = true) String monthParam,
+    public String newSkill(@RequestParam(value = "category") String categoryTitle,
+            @RequestParam(value = "month", required = false) String monthParam,
             Model model) {
 
+        String targetMonthValue = (monthParam == null || monthParam.isBlank())
+                ? YearMonth.now().toString()
+                : monthParam;
+                
+        // フォームの初期化
         User currentUser = userService.getCurrentUser();
         SkillForm form = new SkillForm();
         form.setUserId(currentUser.getId());
-        form.setLearningDate(YearMonth.parse(monthParam).atDay(1).atStartOfDay());
-        YearMonth targetMonth;
-        if (monthParam == null || monthParam.isBlank()) {
-            targetMonth = YearMonth.now();
-        } else {
-            targetMonth = YearMonth.parse(monthParam); // yyyy-MM 形式が必要
-        }
+        form.setLearningDate(YearMonth.parse(targetMonthValue).atDay(1).atStartOfDay());
 
-        // categoryId を hidden で渡せるようにする
         Long categoryId = categoryRepository.findByTitle(categoryTitle)
                 .stream().findFirst()
                 .map(Category::getId)
@@ -95,13 +95,8 @@ public class SkillController {
 
         model.addAttribute("skillformModel", form);
         model.addAttribute("selectedCategory", categoryTitle);
-        model.addAttribute("selectedCategoryId", categoryId);
-        model.addAttribute("targetMonthValue", monthParam);
-        model.addAttribute("targetMonthValue", targetMonth.toString()); // ← yyyy-MM
+        model.addAttribute("targetMonthValue", targetMonthValue);
 
-        System.out.println("Selected Month: " + monthParam);
-        System.out.println("Selected Category: " + categoryTitle);
-        System.out.println("CurrentUser " + currentUser.getName());
         return "skill/new";
     }
 

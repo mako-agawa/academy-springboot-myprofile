@@ -42,4 +42,12 @@ public class LearningDataService {
                 .map(category -> getLearningDataByCategoryAndMonth(userId, category.getId(), month))
                 .orElse(List.of()); // 見つからなかったら空リスト
     }
+
+    // 特定のユーザーに基づいて、指定された月の学習データを取得するメソッド
+    public List<LearningData> getLearningDataByUserAndMonth(Long userId, YearMonth month) {
+        LocalDateTime startOfMonth = month.atDay(1).atStartOfDay();
+        LocalDateTime endOfMonth = month.atEndOfMonth().atTime(23, 59, 59);
+        return learningDataRepository.findByUserIdAndLearningDateBetween(
+                userId, startOfMonth, endOfMonth);
+    }
 }

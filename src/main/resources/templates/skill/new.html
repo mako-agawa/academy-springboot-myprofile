@@ -25,10 +25,10 @@
     <main class="pb-5 container main-content">
       <h1 class="text-center main-title" th:text="${selectedCategory} + 'に項目を追加'"></h1>
 
-      <form th:action="@{/skill/new(month=${targetMonthValue})}" th:object="${skillformModel}" method="post" novalidate
-        class="form-container">
+      <form th:action="@{/skill/new}" th:object="${skillformModel}" method="post" novalidate>
+        <input type="hidden" name="month" th:value="${targetMonthValue}" />
 
-        <input type="hidden" th:field="*{userId}" th:value="${user.id}" />
+        <input type="hidden" th:field="*{userId}" th:value="${userId}" />
         <input type="hidden" th:field="*{categoryId}" th:value="${selectedCategoryId}" />
         <input type="hidden" th:field="*{learningDate}"
           th:value="${#temporals.format(skillformModel.learningDate,'yyyy-MM')}" />
