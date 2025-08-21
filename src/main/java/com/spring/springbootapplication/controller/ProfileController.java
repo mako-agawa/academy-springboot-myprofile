@@ -3,6 +3,7 @@ package com.spring.springbootapplication.controller;
 import java.io.IOException;
 import java.util.Map;
 
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -12,7 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.multipart.MultipartFile;
+
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cloudinary.Cloudinary;
@@ -23,8 +24,6 @@ import com.spring.springbootapplication.repository.UserRepository;
 import com.spring.springbootapplication.service.UserService;
 import com.spring.springbootapplication.web.ProfileForm; // ★ これを合わせる
 
-import lombok.Value;
-
 @Controller
 public class ProfileController {
     private final UserRepository userRepository; // ユーザー情報を取得するためのリポジトリ
@@ -32,6 +31,8 @@ public class ProfileController {
     private final UserService userService;
     @org.springframework.beans.factory.annotation.Value("${cloudinary.cloud-name}")
     private String cloudinaryCloudName;
+    @org.springframework.beans.factory.annotation.Value("${cloudinary.upload-preset}")
+    private String cloudinaryUploadPreset;
 
     public ProfileController(UserService userService, Cloudinary cloudinary,
             UserRepository userRepository) {
@@ -55,6 +56,7 @@ public class ProfileController {
         }
 
          model.addAttribute("cloudinaryCloudName", cloudinaryCloudName);
+         model.addAttribute("cloudinaryUploadPreset", cloudinaryUploadPreset);
         model.addAttribute("user", user);
         return "profile";
     }
