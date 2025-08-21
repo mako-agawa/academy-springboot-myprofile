@@ -5,6 +5,7 @@ const hiddenPublicId = document.getElementById("thumbnailPublicId");
 const uploadPreset = "unsigned_preset_123"; 
 
 input.addEventListener("change", async () => {
+    console.log("loaded");
     console.log(uploadPreset);
     if (input.files.length > 0) {
         const file = input.files[0];
