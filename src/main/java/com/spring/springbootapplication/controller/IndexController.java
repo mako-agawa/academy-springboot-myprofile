@@ -33,7 +33,9 @@ public class IndexController {
             model.addAttribute("thumbnailUrl",
                     "/image/default-avatar.avif");
         }
+        
 
         return "index";
     }
+    
 }

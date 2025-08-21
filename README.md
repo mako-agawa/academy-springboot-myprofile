@@ -1,10 +1,10 @@
 # My Profile アプリ
 ## サンプルデータ
 
-| id | name  | email             | password_digest | biography                   | thumbnail_url                  |
-|----|-------|-------------------|-----------------|-----------------------------|---------------------------------|
-| 1  | Alice | alice@example.com | pass1234 | I am Alice. I love coding.  | https://example.com/alice.jpg  |
-| 2  | Bob   | bob@example.com   | pass1234 | Hi, Bob here. Coffee addict.| https://example.com/bob.jpg    |
+| id | name  | email             | password_digest | 
+|----|-------|-------------------|-----------------|
+| 1  | Alice | alice@example.com | pass1234 |
+| 2  | Bob   | bob@example.com   | pass1234 |
 
 
 ## コンテナ上でビルドを実行
