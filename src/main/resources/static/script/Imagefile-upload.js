@@ -2,11 +2,11 @@ const input = document.getElementById("thumbnail");
 const label = document.getElementById("file-label");
 const hiddenPublicId = document.getElementById("thumbnailPublicId");
 
+console.log("loaded");
 const uploadPreset = "unsigned_preset_123"; 
+console.log(uploadPreset);
 
 input.addEventListener("change", async () => {
-    console.log("loaded");
-    console.log(uploadPreset);
     if (input.files.length > 0) {
         const file = input.files[0];
 
@@ -25,7 +25,7 @@ input.addEventListener("change", async () => {
 
         try {
             const res = await fetch(
-                `https://api.cloudinary.com/v1_1/djklqnmen/image/upload`,
+                'https://api.cloudinary.com/v1_1/djklqnmen/image/upload',
                 { method: "POST", body: formData }
                 
             );
