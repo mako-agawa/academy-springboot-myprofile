@@ -3,6 +3,7 @@ package com.spring.springbootapplication.service;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -21,8 +22,27 @@ public class LearningDataService {
         this.categoryRepository = categoryRepository;
     }
 
-    // 保存用メソッド
-    public LearningData save(LearningData data) {
+    // 保存用メソッド（ユニークチェック付き）
+    public LearningData saveWithValidation(LearningData data) {
+        LocalDateTime startOfMonth = data.getLearningDate()
+                .withDayOfMonth(1)
+                .toLocalDate()
+                .atStartOfDay();
+        LocalDateTime endOfMonth = data.getLearningDate()
+                .withDayOfMonth(data.getLearningDate().toLocalDate().lengthOfMonth()).toLocalDate()
+                .atTime(23, 59, 59);
+
+        System.out.println("Checking for existing data in the month: " + startOfMonth + " to " + endOfMonth);
+        boolean exists = learningDataRepository.existsByUserIdAndTitleAndLearningDateBetween(
+                data.getUser().getId(),
+                data.getTitle(),
+                startOfMonth,
+                endOfMonth);
+
+        if (exists) {
+            throw new IllegalArgumentException("同じ月に同じスキル名は登録できません");
+        }
+
         return learningDataRepository.save(data);
     }
 
@@ -40,14 +60,21 @@ public class LearningDataService {
                 .stream()
                 .findFirst()
                 .map(category -> getLearningDataByCategoryAndMonth(userId, category.getId(), month))
-                .orElse(List.of()); // 見つからなかったら空リスト
+                .orElse(List.of());
     }
 
-    // 特定のユーザーに基づいて、指定された月の学習データを取得するメソッド
     public List<LearningData> getLearningDataByUserAndMonth(Long userId, YearMonth month) {
         LocalDateTime startOfMonth = month.atDay(1).atStartOfDay();
         LocalDateTime endOfMonth = month.atEndOfMonth().atTime(23, 59, 59);
         return learningDataRepository.findByUserIdAndLearningDateBetween(
                 userId, startOfMonth, endOfMonth);
+    }
+
+    public Optional<LearningData> findById(Long id) {
+        return learningDataRepository.findById(id);
+    }
+
+    public void deleteById(Long id) {
+        learningDataRepository.deleteById(id);
     }
 }

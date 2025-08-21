@@ -212,6 +212,14 @@ main {
     cursor: pointer;
 }
 
+button:disabled,
+.submit-btn:disabled {
+  background-color: #ccc;  /* グレー背景 */
+  color: #666;             /* 薄い文字 */
+  cursor: not-allowed;     /* 禁止マークのカーソル */
+  opacity: 0.7;            /* 半透明っぽく */
+}
+
 .thumbnail-group {
     /* display: flex; */
     justify-content: left;  
