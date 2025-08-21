@@ -1,9 +1,6 @@
 package com.spring.springbootapplication.controller;
 
-import java.io.IOException;
-import java.util.Map;
-
-
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -17,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
+
 import com.spring.springbootapplication.entity.User;
 import com.spring.springbootapplication.repository.UserRepository;
 
@@ -29,9 +26,10 @@ public class ProfileController {
     private final UserRepository userRepository; // ユーザー情報を取得するためのリポジトリ
     private final Cloudinary cloudinary;
     private final UserService userService;
-    @org.springframework.beans.factory.annotation.Value("${cloudinary.cloud-name}")
+    @Value("${cloudinary.cloud-name}")
     private String cloudinaryCloudName;
-    @org.springframework.beans.factory.annotation.Value("${cloudinary.upload-preset}")
+
+    @Value("${cloudinary.upload-preset}")
     private String cloudinaryUploadPreset;
 
     public ProfileController(UserService userService, Cloudinary cloudinary,
@@ -55,8 +53,8 @@ public class ProfileController {
             model.addAttribute("formModel", form);
         }
 
-         model.addAttribute("cloudinaryCloudName", cloudinaryCloudName);
-         model.addAttribute("cloudinaryUploadPreset", cloudinaryUploadPreset);
+        model.addAttribute("cloudinaryCloudName", cloudinaryCloudName);
+        model.addAttribute("cloudinaryUploadPreset", cloudinaryUploadPreset);
         model.addAttribute("user", user);
         return "profile";
     }
