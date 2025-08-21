@@ -1,10 +1,9 @@
 const input = document.getElementById("thumbnail");
 const label = document.getElementById("file-label");
 const hiddenPublicId = document.getElementById("thumbnailPublicId");
+const button = document.querySelector(".submit-btn");
 
-console.log("loaded");
-const uploadPreset = "unsigned_preset_123"; 
-console.log(uploadPreset);
+const uploadPreset = "unsigned_preset_123";
 
 input.addEventListener("change", async () => {
     if (input.files.length > 0) {
@@ -17,6 +16,8 @@ input.addEventListener("change", async () => {
             return;
         }
 
+        // ✅ アップロード中はボタン無効化
+        button.disabled = true;
         label.textContent = "アップロード中...";
 
         const formData = new FormData();
@@ -27,7 +28,6 @@ input.addEventListener("change", async () => {
             const res = await fetch(
                 'https://api.cloudinary.com/v1_1/djklqnmen/image/upload',
                 { method: "POST", body: formData }
-                
             );
             const data = await res.json();
 
@@ -35,15 +35,18 @@ input.addEventListener("change", async () => {
                 console.error(data.error);
                 label.textContent = "アップロード失敗";
                 hiddenPublicId.value = "";
-                return;
+            } else {
+                hiddenPublicId.value = data.public_id;
+                document.getElementById("thumbnailName").value = file.name;
+                label.textContent = file.name;
             }
-            hiddenPublicId.value = data.public_id;
-            document.getElementById("thumbnailName").value = file.name;
-            label.textContent = file.name;
         } catch (err) {
             console.error("Upload failed", err);
             label.textContent = "アップロードに失敗しました";
             hiddenPublicId.value = "";
+        } finally {
+            // ✅ アップロード完了したらボタンを有効化
+            button.disabled = false;
         }
     } else {
         label.textContent = "ファイル未選択";

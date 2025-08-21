@@ -7,9 +7,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -20,6 +21,9 @@ import com.spring.springbootapplication.repository.CategoryRepository;
 import com.spring.springbootapplication.service.LearningDataService;
 import com.spring.springbootapplication.service.UserService;
 import com.spring.springbootapplication.web.SkillForm;
+
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 @Controller
 public class LearningDataController {
@@ -100,46 +104,51 @@ public class LearningDataController {
         }
 
         @PostMapping("/skill/new")
+        @Transactional
         public String createSkill(
-                        @ModelAttribute("skillformModel") SkillForm form,
+                        @ModelAttribute("skillformModel") @Valid SkillForm form,
                         @RequestParam("month") String monthParam,
                         BindingResult result,
                         Model model) {
 
                 if (result.hasErrors()) {
+                        // 必要なmodelを再セット
+                        model.addAttribute("targetMonthValue", monthParam);
+                        model.addAttribute("selectedCategoryId", form.getCategoryId());
+                        model.addAttribute("selectedCategory", "カテゴリ名");
                         return "skill/new";
                 }
 
                 User currentUser = userService.getCurrentUser();
 
-                // LearningData に変換
                 LearningData data = new LearningData();
                 data.setTitle(form.getTitle());
                 data.setTimeRecord(form.getTimeRecord());
-                data.setLearningDate(form.getLearningDate());
                 data.setUser(currentUser);
 
                 Category category = categoryRepository.findById(form.getCategoryId())
                                 .orElseThrow(() -> new RuntimeException("カテゴリが見つかりません"));
                 data.setCategory(category);
 
+                // ★ monthParam (例: "2025-08") を LocalDateTime に変換してセット
+                YearMonth ym = YearMonth.parse(monthParam);
+                data.setLearningDate(ym.atDay(1).atStartOfDay());
+
                 try {
                         learningDataService.saveWithValidation(data);
                 } catch (IllegalArgumentException e) {
-                        // バリデーションエラーをフィールドに追加
                         result.rejectValue("title", "duplicate", e.getMessage());
-
-                        // 再描画に必要な値をセット
-                        model.addAttribute("selectedCategory", category.getTitle());
                         model.addAttribute("targetMonthValue", monthParam);
+                        model.addAttribute("selectedCategoryId", category.getId());
+                        model.addAttribute("selectedCategory", category.getTitle());
                         return "skill/new";
                 }
 
-                // 保存後に元の month 画面へリダイレクト
                 return "redirect:/skill?month=" + monthParam;
         }
 
         @PostMapping("/skill/delete")
+
         public String deleteSkill(@RequestParam("id") Long id,
                         @RequestParam("month") String monthParam) {
                 User loggedInUser = userService.getCurrentUser();

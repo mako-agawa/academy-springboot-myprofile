@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SkillForm {
-    private Long id; // フォームでIDを扱うならnull許容でOK
+    private Long id;
 
     @NotBlank(message = "スキル名は必ず入力してください")
     @Size(max = 50, message = "項目名は50文字以内で入力してください")
@@ -20,10 +20,9 @@ public class SkillForm {
 
     @NotNull(message = "学習時間は必ず入力してください")
     @Min(value = 0, message = "学習時間は0以上の数字で入力してください")
-    private Integer timeRecord; 
+    private Integer timeRecord; // int → Integer
 
     private LocalDateTime learningDate;
-
     private Long userId;
     private Long categoryId;
 }
