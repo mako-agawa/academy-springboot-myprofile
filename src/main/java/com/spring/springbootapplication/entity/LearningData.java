@@ -27,42 +27,41 @@ public class LearningData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 25)
-    @Size(max = 25, message = "氏名は25文字以内で入力してください") // 文字数のバリデーション。
-    @NotBlank(message = "名前は必ず入力してください")
+    @Column(nullable = false, length = 50)
+    @Size(max = 50, message = "項目名は50文字以内で入力してください")
+    @NotBlank(message = "項目名は必ず入力してください")
     private String title;
 
-    @Column(name = "time_record", nullable = false)    
+    @Column(name = "time_record", nullable = false)
     private int timeRecord;
 
     @Column(name = "learning_date", nullable = false)
     private LocalDateTime learningDate;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = true)
+    @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference("user-learning")
     private User user;
 
-    @JsonBackReference("category-learning")
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", nullable = false)
+    @JsonBackReference("category-learning")
     private Category category;
 
-    @Column(name = "created_at", insertable = false, updatable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-    @Column(name = "updated_at", insertable = false, updatable = true)
-    private LocalDateTime updatedAt = LocalDateTime.now();
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
-    @PrePersist // ← PerPersist ではなく PrePersist
+    @PrePersist
     public void onCreate() {
-        createdAt = LocalDateTime.now(); // ← now() はメソッド呼び出し
-        updatedAt = createdAt; // 作成時は同じ値にしておく
+        createdAt = LocalDateTime.now();
+        updatedAt = createdAt;
     }
 
-    @PreUpdate // ← PerUpdate ではなく PreUpdate
+    @PreUpdate
     public void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
-
 }

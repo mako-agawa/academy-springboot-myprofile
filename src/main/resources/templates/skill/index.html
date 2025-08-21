@@ -67,7 +67,10 @@
                 <input class="skill-time" type="number" min="0" th:value="${backEndData.timeRecord}" />
                 <button type="submit" class="skill-time-submit-btn">学習時間を保存する</button>
               </div>
-              <form action="/skill/delete" method="post" class="search-form">
+              <form th:action="@{/skill/delete}" method="post" class="search-form">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <input type="hidden" name="id" th:value="${backEndData.id}">
+                <input type="hidden" name="month" th:value="${targetMonth}">
                 <button type="submit" class="skill-delete-btn">削除する</button>
               </form>
             </li>
@@ -95,7 +98,10 @@
               </div>
               <input class="skill-time" type="number" min="0" th:value="${frontEndData.timeRecord}" />
               <button class="skill-time-submit-btn">学習時間を保存する</button>
-              <form action="/skill/delete" method="post" class="search-form">
+              <form th:action="@{/skill/delete}" method="post" class="search-form">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <input type="hidden" name="id" th:value="${frontEndData.id}">
+                <input type="hidden" name="month" th:value="${targetMonth}">
                 <button type="submit" class="skill-delete-btn">削除する</button>
               </form>
             </li>
@@ -123,7 +129,10 @@
               </div>
               <input class="skill-time" type="number" min="0" th:value="${infraData.timeRecord}" />
               <button class="skill-time-submit-btn">学習時間を保存する</button>
-              <form action="/skill/delete" method="post" class="search-form">
+              <form th:action="@{/skill/delete}" method="post" class="search-form">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <input type="hidden" name="id" th:value="${infraData.id}">
+                <input type="hidden" name="month" th:value="${targetMonth}">
                 <button type="submit" class="skill-delete-btn">削除する</button>
               </form>
             </li>

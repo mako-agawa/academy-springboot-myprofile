@@ -10,7 +10,8 @@ import com.spring.springbootapplication.service.LearningDataService;
 
 public interface LearningDataRepository extends JpaRepository<LearningData, Long> {
 
- 
+    boolean existsByUserIdAndTitleAndLearningDateBetween(
+            Long userId, String title, LocalDateTime start, LocalDateTime end);
 
     List<LearningData> findByUserId(Long userId);
 
@@ -18,12 +19,10 @@ public interface LearningDataRepository extends JpaRepository<LearningData, Long
 
     List<LearningData> findByUserIdAndCategoryId(Long userId, Long categoryId);
 
-     // 今月分（開始日〜終了日）のデータを取る
+    // 今月分（開始日〜終了日）のデータを取る
     List<LearningData> findByUserIdAndLearningDateBetween(Long userId, LocalDateTime start, LocalDateTime end);
 
     List<LearningData> findByUserIdAndCategoryIdAndLearningDateBetween(
-        Long userId, Long categoryId, LocalDateTime start, LocalDateTime end
-    );
+            Long userId, Long categoryId, LocalDateTime start, LocalDateTime end);
 
-    
 }
