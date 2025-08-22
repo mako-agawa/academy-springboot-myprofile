@@ -1,38 +1,37 @@
-// ===== 削除完了モーダル =====
 (function () {
     const body = document.body;
     const doneModal = document.getElementById("doneModal");
     if (!body || !doneModal) return;
 
-    const closeBtn = doneModal.querySelector(".close");
     const okBtn = doneModal.querySelector(".modal-ok");
     const msgEl = doneModal.querySelector("#doneMessage");
 
     function openDoneModal(message) {
         if (message && msgEl) msgEl.textContent = message;
-        doneModal.classList.add("show");      // ← これだけで中央に
+        doneModal.classList.add("show");
         doneModal.setAttribute("aria-hidden", "false");
     }
     function closeDoneModal() {
         doneModal.classList.remove("show");
-        doneModal.style.display = "none";
         doneModal.setAttribute("aria-hidden", "true");
     }
 
-    // フラッシュ属性が true のときだけ開く
-    const success = body.dataset.deleteSuccess === "true";
-    if (success) {
-        const title = body.dataset.deletedTitle;
-        console.log(`削除完了: ${title}`);
-        const message = `${title} 削除しました！`;
-        // DOM が描画された後に開く（ちらつき防止）
-        window.requestAnimationFrame(() => openDoneModal(message));
+    function redirectToSkill() {
+        const month = body.dataset.redirectMonth || "";
+        const url = month ? `/skill?month=${encodeURIComponent(month)}` : "/skill";
+        window.location.href = url;
     }
 
-    // 閉じる操作
-    closeBtn?.addEventListener("click", closeDoneModal);
-    okBtn?.addEventListener("click", closeDoneModal);
-    window.addEventListener("click", (e) => {
-        if (e.target === doneModal) closeDoneModal();
-    });
+    const success = body.dataset.addSuccess === "true";
+    if (success) {
+        const title = body.dataset.addTitle || "";
+        const time = body.dataset.addTime || "";
+        const category = body.dataset.addCategory || "";
+        const msg = `${category}「${title}」を ${time} 分で登録しました。`;
+        window.requestAnimationFrame(() => openDoneModal(msg));
+    }
+
+    okBtn?.addEventListener("click", redirectToSkill);
+    // 背景クリックで閉じたいなら↓を有効化（今回はすぐ戻る導線なので不要なら消してOK）
+    // window.addEventListener("click", (e) => { if (e.target === doneModal) closeDoneModal(); });
 })();

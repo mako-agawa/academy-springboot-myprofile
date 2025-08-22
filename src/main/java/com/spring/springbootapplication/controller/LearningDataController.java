@@ -108,12 +108,11 @@ public class LearningDataController {
         @Transactional
         public String createSkill(
                         @ModelAttribute("skillformModel") @Valid SkillForm form,
-                        BindingResult result, // ← @Valid の直後に置く！
+                        BindingResult result,
                         @RequestParam("month") String monthParam,
                         Model model) {
 
                 if (result.hasErrors()) {
-                        // 再表示に必要な属性を補完（カテゴリ名・ID・月など）
                         model.addAttribute("targetMonthValue", monthParam);
                         model.addAttribute("selectedCategoryId", form.getCategoryId());
                         model.addAttribute("selectedCategory",
@@ -133,9 +132,10 @@ public class LearningDataController {
                                 .orElseThrow(() -> new RuntimeException("カテゴリが見つかりません"));
                 data.setCategory(category);
 
-                // ★ monthParam (例: "2025-08") を LocalDateTime に変換してセット
                 YearMonth ym = YearMonth.parse(monthParam);
                 data.setLearningDate(ym.atDay(1).atStartOfDay());
+
+
 
                 try {
                         learningDataService.saveWithValidation(data);
@@ -147,7 +147,21 @@ public class LearningDataController {
                         return "skill/new";
                 }
 
-                return "redirect:/skill?month=" + monthParam;
+                // ★ 成功フラグとモーダル文言に必要な最低限の文字列を model に載せる
+                model.addAttribute("addSuccess", true);
+                model.addAttribute("addTitle", data.getTitle());
+                model.addAttribute("addTime", data.getTimeRecord());
+                model.addAttribute("addCategory", category.getTitle());
+                model.addAttribute("redirectMonth", monthParam); // OK押下で戻る先に使う
+
+                // ★ そのまま new の画面を再表示（ここでモーダルを出す）
+                model.addAttribute("targetMonthValue", monthParam);
+                model.addAttribute("selectedCategoryId", form.getCategoryId());
+                model.addAttribute("selectedCategory", category.getTitle());
+                // フォームを空にしたい場合は新しいフォームを渡す
+                model.addAttribute("skillformModel", new SkillForm());
+
+                return "skill/new";
         }
 
         public String editSkillTime(@RequestParam("id") Long id,
@@ -181,8 +195,7 @@ public class LearningDataController {
                 learningDataService.deleteById(id);
 
                 redirectAttrs.addFlashAttribute("deleteSuccess", true);
-                redirectAttrs.addFlashAttribute("deletedTitle", title); // ← これが肝
-
+                redirectAttrs.addFlashAttribute("deletedTitle", title);
                 return "redirect:/skill?month=" + monthParam;
         }
 
