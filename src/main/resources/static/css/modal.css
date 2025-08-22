@@ -39,6 +39,9 @@
 
   display: flex;
   flex-direction: column;
+  align-items: center;         /* 中央寄せ */
+  justify-content: center;
+
   gap: 12px;
   margin: 0;                  /* ← margin: auto; 等は不要 */
 }

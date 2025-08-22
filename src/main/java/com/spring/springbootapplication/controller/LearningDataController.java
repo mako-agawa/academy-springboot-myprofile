@@ -1,6 +1,7 @@
 // src/main/java/com/spring/springbootapplication/controller/DataController.java
 package com.spring.springbootapplication.controller;
 
+import java.sql.Time;
 import java.time.YearMonth;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,9 +23,11 @@ import com.spring.springbootapplication.repository.CategoryRepository;
 import com.spring.springbootapplication.service.LearningDataService;
 import com.spring.springbootapplication.service.UserService;
 import com.spring.springbootapplication.web.SkillForm;
+import com.spring.springbootapplication.web.TimeRecordFrom;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class LearningDataController {
@@ -59,7 +62,9 @@ public class LearningDataController {
                 model.addAttribute("twoMonthsAgoLabel", YearMonth.now().minusMonths(2).getMonthValue() + "月");
 
                 User currentUser = userService.getCurrentUser();
-
+                TimeRecordFrom timeRecordForm = new TimeRecordFrom();
+                
+                model.addAttribute("timeRecordForm", timeRecordForm);
                 model.addAttribute("backEndLearningDatas",
                                 learningDataService.getLearningDataByCategoryNameAndMonth(currentUser.getId(), "バックエンド",
                                                 targetMonth));
@@ -135,8 +140,6 @@ public class LearningDataController {
                 YearMonth ym = YearMonth.parse(monthParam);
                 data.setLearningDate(ym.atDay(1).atStartOfDay());
 
-
-
                 try {
                         learningDataService.saveWithValidation(data);
                 } catch (IllegalArgumentException e) {
@@ -164,16 +167,44 @@ public class LearningDataController {
                 return "skill/new";
         }
 
-        public String editSkillTime(@RequestParam("id") Long id,
+        @PostMapping("/skill/update")
+        public String updateTimeRecord(
+                        @RequestParam("id") Long id,
                         @RequestParam("month") String monthParam,
-                        Model model) {
+                        @ModelAttribute("timeRecordForm") @Validated TimeRecordFrom timeRecordFromorm,
+                        BindingResult result,
+                        RedirectAttributes redirectAttrs) {
+                                
+
+                if (result.hasErrors()) {
+                        // 簡易的に一覧へ戻す。必要ならエラーフラッシュを載せる
+                        redirectAttrs.addFlashAttribute("updateError", "入力値に誤りがあります。");
+
+                        System.out.println("===========================");
+                        System.out.println("Validation errors: " + result.getAllErrors());
+                        System.out.println("===========================");
+                        return "redirect:/skill?month=" + monthParam;
+                }
 
                 User loggedInUser = userService.getCurrentUser();
 
                 LearningData learningData = learningDataService.findById(id)
                                 .orElseThrow(() -> new RuntimeException("データが見つかりません"));
 
-                return "skill/edit";
+                if (!learningData.getUser().getId().equals(loggedInUser.getId())) {
+                        throw new RuntimeException("権限がありません");
+                }
+
+                learningData.setTimeRecord(timeRecordFromorm.getTimeRecord());
+                learningDataService.save(learningData);
+
+                redirectAttrs.addFlashAttribute("updateSuccess", true);
+                redirectAttrs.addFlashAttribute("updatedTitle", learningData.getTitle());
+                redirectAttrs.addFlashAttribute("updatedTime", learningData.getTimeRecord());
+                System.out.println("===========================");
+                System.out.println("Time record updated: " + learningData.getTimeRecord());
+                System.out.println("===========================");
+                return "redirect:/skill?month=" + monthParam;
         }
 
         @PostMapping("/skill/delete")

@@ -27,7 +27,7 @@
         const title = body.dataset.addTitle || "";
         const time = body.dataset.addTime || "";
         const category = body.dataset.addCategory || "";
-        const msg = `${category}「${title}」を ${time} 分で登録しました。`;
+        const msg = `${category}${title}を${time}分で登録しました。`;
         window.requestAnimationFrame(() => openDoneModal(msg));
     }
 

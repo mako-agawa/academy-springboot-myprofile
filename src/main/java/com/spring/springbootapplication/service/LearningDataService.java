@@ -22,6 +22,11 @@ public class LearningDataService {
         this.categoryRepository = categoryRepository;
     }
 
+    public LearningData save(LearningData data) {
+        return learningDataRepository.save(data);
+    }
+    
+    
     // 保存用メソッド（ユニークチェック付き）
     public LearningData saveWithValidation(LearningData data) {
         LocalDateTime startOfMonth = data.getLearningDate()
