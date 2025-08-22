@@ -11,7 +11,9 @@
   <script src="/script/add-modal.js" defer></script>
 </head>
 
-<body>
+<body th:data-add-success="${addSuccess} ? 'true' : 'false'" th:data-add-title="${addTitle} ?: ''"
+  th:data-add-time="${addTime} ?: ''" th:data-add-category="${addCategory} ?: ''"
+  th:data-redirect-month="${redirectMonth} ?: ''">
   <div class="wrapper">
     <header>
       <div class="header">
@@ -33,7 +35,7 @@
 
         <div class="form-group">
           <label>項目名</label>
-          <input type="text" th:field="*{title}" class="form-control" maxlength="50" required>
+          <input type="text" th:field="*{title}" class="form-control" required>
           <p class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
         </div>
 
@@ -45,7 +47,7 @@
         </div>
 
         <div class="button-wrapper">
-          <button type="submit" class="submit-btn"  id="addModal">追加する</button>
+          <button type="submit" class="submit-btn" id="addModal">追加する</button>
         </div>
       </form>
 
