@@ -1,0 +1,71 @@
+
+/* モーダル背景（非表示がデフォルト） */
+.modal { 
+    display: none;              
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.4);
+    z-index: 9999;
+
+    /* 中央寄せ用 */
+    
+}
+
+/* ベース：フルスクリーンの半透明レイヤー。デフォルトは非表示 */
+.modal {
+  display: none;              /* ← これ大事 */
+  position: fixed;            /* 画面に固定 */
+  inset: 0;                   /* 画面全体 */
+  background: rgba(0,0,0,.4); /* 背景の暗幕 */
+  z-index: 9999;
+}
+
+/* 表示時はフレックス中央寄せ */
+.modal.show {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 中身のカード */
+.modal-content {
+  background: #fff;
+  width: 640px;
+  max-width: calc(100% - 32px); /* 画面が狭い時に余白を確保 */
+  min-height: 240px;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;                  /* ← margin: auto; 等は不要 */
+}
+
+/* テキストとボタン */
+.modal-content p {
+  font-size: 18px;
+  color: var(--color-text);
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.modal-ok {
+  width: 192px;
+  height: 48px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: none;
+  color: var(--color-sub);
+  background-color: var(--color-main);
+  cursor: pointer;
+}
