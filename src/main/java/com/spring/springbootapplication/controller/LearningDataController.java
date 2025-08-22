@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.springbootapplication.entity.Category;
 import com.spring.springbootapplication.entity.LearningData;
@@ -107,15 +108,17 @@ public class LearningDataController {
         @Transactional
         public String createSkill(
                         @ModelAttribute("skillformModel") @Valid SkillForm form,
+                        BindingResult result, // ← @Valid の直後に置く！
                         @RequestParam("month") String monthParam,
-                        BindingResult result,
                         Model model) {
 
                 if (result.hasErrors()) {
-                        // 必要なmodelを再セット
+                        // 再表示に必要な属性を補完（カテゴリ名・ID・月など）
                         model.addAttribute("targetMonthValue", monthParam);
                         model.addAttribute("selectedCategoryId", form.getCategoryId());
-                        model.addAttribute("selectedCategory", "カテゴリ名");
+                        model.addAttribute("selectedCategory",
+                                        categoryRepository.findById(form.getCategoryId())
+                                                        .map(Category::getTitle).orElse("カテゴリ名"));
                         return "skill/new";
                 }
 
@@ -147,23 +150,39 @@ public class LearningDataController {
                 return "redirect:/skill?month=" + monthParam;
         }
 
-        @PostMapping("/skill/delete")
+        public String editSkillTime(@RequestParam("id") Long id,
+                        @RequestParam("month") String monthParam,
+                        Model model) {
 
-        public String deleteSkill(@RequestParam("id") Long id,
-                        @RequestParam("month") String monthParam) {
                 User loggedInUser = userService.getCurrentUser();
 
                 LearningData learningData = learningDataService.findById(id)
                                 .orElseThrow(() -> new RuntimeException("データが見つかりません"));
 
-                // ログインユーザーのデータかチェックしてセキュリティ確保
+                return "skill/edit";
+        }
+
+        @PostMapping("/skill/delete")
+        public String deleteSkill(@RequestParam("id") Long id,
+                        @RequestParam("month") String monthParam,
+                        RedirectAttributes redirectAttrs) {
+                User loggedInUser = userService.getCurrentUser();
+
+                LearningData learningData = learningDataService.findById(id)
+                                .orElseThrow(() -> new RuntimeException("データが見つかりません"));
+
                 if (!learningData.getUser().getId().equals(loggedInUser.getId())) {
                         throw new RuntimeException("権限がありません");
                 }
 
+                // ★ 削除前にタイトルを保持してフラッシュへ
+                String title = learningData.getTitle();
+
                 learningDataService.deleteById(id);
 
-                // 元の月にリダイレクト
+                redirectAttrs.addFlashAttribute("deleteSuccess", true);
+                redirectAttrs.addFlashAttribute("deletedTitle", title); // ← これが肝
+
                 return "redirect:/skill?month=" + monthParam;
         }
 

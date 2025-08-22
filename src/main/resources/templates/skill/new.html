@@ -7,6 +7,8 @@
   <title th:text="${title}">My Profile</title>
   <link href="/css/style.css" rel="stylesheet" />
   <link rel="stylesheet" href="/css/form.css">
+  <link rel="stylesheet" href="/css/modal.css">
+  <script src="/script/add-modal.js" defer></script>
 </head>
 
 <body>
@@ -31,7 +33,7 @@
 
         <div class="form-group">
           <label>項目名</label>
-          <input type="text" th:field="*{title}" class="form-control" required>
+          <input type="text" th:field="*{title}" class="form-control" maxlength="50" required>
           <p class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
         </div>
 
@@ -43,9 +45,19 @@
         </div>
 
         <div class="button-wrapper">
-          <button type="submit" class="submit-btn">追加する</button>
+          <button type="submit" class="submit-btn"  id="addModal">追加する</button>
         </div>
       </form>
+
+      <!-- モーダル -->
+      <div id="doneModal" class="modal" aria-hidden="true" role="dialog">
+        <div class="modal-content" role="document">
+          <p id="doneMessage"></p>
+          <div class="modal-actions">
+            <button type="button" class="modal-ok">編集ページに戻る</button>
+          </div>
+        </div>
+      </div>
     </main>
 
     <!-- footer -->
