@@ -1,7 +1,6 @@
 // src/main/java/com/spring/springbootapplication/controller/DataController.java
 package com.spring.springbootapplication.controller;
 
-import java.sql.Time;
 import java.time.YearMonth;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,7 +26,6 @@ import com.spring.springbootapplication.web.TimeRecordFrom;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class LearningDataController {

@@ -17,10 +17,7 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
             HttpServletResponse response,
             Authentication authentication)
             throws IOException, ServletException {
-        System.out.println("==================");
-        System.out.println("logout !!");
-        System.out.println("==================");
-
+ 
         response.sendRedirect("/auth/login?logout");
     }
 }
