@@ -32,6 +32,5 @@
     }
 
     okBtn?.addEventListener("click", redirectToSkill);
-    // 背景クリックで閉じたいなら↓を有効化（今回はすぐ戻る導線なので不要なら消してOK）
-    // window.addEventListener("click", (e) => { if (e.target === doneModal) closeDoneModal(); });
+
 })();
