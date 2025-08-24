@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.cloudinary.Cloudinary;
-
 import com.spring.springbootapplication.entity.User;
 import com.spring.springbootapplication.repository.UserRepository;
 
@@ -24,7 +22,6 @@ import com.spring.springbootapplication.web.ProfileForm; // ★ これを合わ�
 @Controller
 public class ProfileController {
     private final UserRepository userRepository; // ユーザー情報を取得するためのリポジトリ
-    private final Cloudinary cloudinary;
     private final UserService userService;
     @Value("${cloudinary.cloud-name}")
     private String cloudinaryCloudName;
@@ -32,9 +29,9 @@ public class ProfileController {
     @Value("${cloudinary.upload-preset}")
     private String cloudinaryUploadPreset;
 
-    public ProfileController(UserService userService, Cloudinary cloudinary,
+    public ProfileController(UserService userService,
             UserRepository userRepository) {
-        this.cloudinary = cloudinary;
+
         this.userRepository = userRepository;
         this.userService = userService;
 

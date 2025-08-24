@@ -63,6 +63,7 @@ public class LearningDataController {
                 TimeRecordFrom timeRecordForm = new TimeRecordFrom();
                 
                 model.addAttribute("timeRecordForm", timeRecordForm);
+                
                 model.addAttribute("backEndLearningDatas",
                                 learningDataService.getLearningDataByCategoryNameAndMonth(currentUser.getId(), "バックエンド",
                                                 targetMonth));
@@ -217,7 +218,6 @@ public class LearningDataController {
                 if (!learningData.getUser().getId().equals(loggedInUser.getId())) {
                         throw new RuntimeException("権限がありません");
                 }
-
                 // ★ 削除前にタイトルを保持してフラッシュへ
                 String title = learningData.getTitle();
 

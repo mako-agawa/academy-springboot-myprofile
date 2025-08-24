@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.spring.springbootapplication.entity.User;
+
 import com.spring.springbootapplication.service.UserService;
 
 @Controller
@@ -25,6 +26,7 @@ public class IndexController {
         model.addAttribute("title", "Welcome");
         model.addAttribute("currentUserName", loggedInUser.getName());
         model.addAttribute("currentUserBio", loggedInUser.getBiography());
+
         if (loggedInUser.getThumbnailPublicId() != null) {
             model.addAttribute("thumbnailUrl",
                     "https://res.cloudinary.com/djklqnmen/image/upload/"
@@ -33,9 +35,7 @@ public class IndexController {
             model.addAttribute("thumbnailUrl",
                     "/image/default-avatar.avif");
         }
-        
-
         return "index";
     }
-    
+
 }

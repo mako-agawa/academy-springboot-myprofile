@@ -8,11 +8,6 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
-        private final CustomLogoutSuccessHandler logoutSuccessHandler;
-
-        public SecurityConfig(CustomLogoutSuccessHandler logoutSuccessHandler) {
-                this.logoutSuccessHandler = logoutSuccessHandler;
-        }
 
         @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -41,7 +36,6 @@ public class SecurityConfig {
                                 // --- ログアウト ---
                                 .logout(logout -> logout
                                                 .logoutUrl("/auth/logout") // デフォルトは POST /logout
-                                                .logoutSuccessHandler(logoutSuccessHandler) // ← 追加
                                                 .logoutSuccessUrl("/auth/login?logout")
                                                 .invalidateHttpSession(true)
                                                 .deleteCookies("JSESSIONID")
@@ -61,5 +55,4 @@ public class SecurityConfig {
                 return new BCryptPasswordEncoder();
         }
 
-        
 }

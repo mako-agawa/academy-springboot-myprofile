@@ -253,6 +253,15 @@ main {
     display: flex;
     align-items: center;
 }
+
+.skill-name p{
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    text-overflow: clip;
+    scrollbar-width: thin;
+}
+
 .input-button-wrapper{
     display: inline-flex;
 }
