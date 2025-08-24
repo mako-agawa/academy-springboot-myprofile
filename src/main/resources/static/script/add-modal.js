@@ -1,36 +1,41 @@
 (function () {
-    const body = document.body;
-    const doneModal = document.getElementById("doneModal");
-    if (!body || !doneModal) return;
+  const body = document.body;
+  const doneModal = document.getElementById("doneModal");
+  if (!body || !doneModal) return;
 
-    const okBtn = doneModal.querySelector(".modal-ok");
-    const msgEl = doneModal.querySelector("#doneMessage");
+  const okBtn = doneModal.querySelector(".modal-ok");
+  const msgElA = doneModal.querySelector("#doneMessageA");
+  const msgElB = doneModal.querySelector("#doneMessageB");
 
-    function openDoneModal(message) {
-        if (message && msgEl) msgEl.textContent = message;
-        doneModal.classList.add("show");
-        doneModal.setAttribute("aria-hidden", "false");
-    }
-    function closeDoneModal() {
-        doneModal.classList.remove("show");
-        doneModal.setAttribute("aria-hidden", "true");
-    }
+  function openDoneModal(messageA, messageB) {
+    if (msgElA) msgElA.textContent = messageA ?? "";
+    if (msgElB) msgElB.textContent = messageB ?? "";
+    doneModal.classList.add("show");
+    doneModal.setAttribute("aria-hidden", "false");
+  }
 
-    function redirectToSkill() {
-        const month = body.dataset.redirectMonth || "";
-        const url = month ? `/skill?month=${encodeURIComponent(month)}` : "/skill";
-        window.location.href = url;
-    }
+  function closeDoneModal() {
+    doneModal.classList.remove("show");
+    doneModal.setAttribute("aria-hidden", "true");
+  }
 
-    const success = body.dataset.addSuccess === "true";
-    if (success) {
-        const title = body.dataset.addTitle || "";
-        const time = body.dataset.addTime || "";
-        const category = body.dataset.addCategory || "";
-        const msg = `${category}${title}を${time}分で登録しました。`;
-        window.requestAnimationFrame(() => openDoneModal(msg));
-    }
+  function redirectToSkill() {
+    const month = body.dataset.redirectMonth || "";
+    const url = month ? `/skill?month=${encodeURIComponent(month)}` : "/skill";
+    window.location.href = url;
+  }
 
-    okBtn?.addEventListener("click", redirectToSkill);
+  const success = body.dataset.addSuccess === "true";
+  if (success) {
+    const title = body.dataset.addTitle || "";
+    const time = body.dataset.addTime || "";
+    const category = body.dataset.addCategory || "";
+    const msgA = `${category}に${title}を`;
+    const msgB = `${time}分で登録しました。`;
 
+    // DOM描画のあとに開くなら1回で十分
+    window.requestAnimationFrame(() => openDoneModal(msgA, msgB));
+  }
+
+  okBtn?.addEventListener("click", redirectToSkill);
 })();

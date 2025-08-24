@@ -24,7 +24,7 @@
     if (success) {
         const title = body.dataset.deletedTitle;
         console.log(`削除完了: ${title}`);
-        const message = `${title} 削除しました！`;
+        const message = `${title}を削除しました！`;
         // DOM が描画された後に開く（ちらつき防止）
         window.requestAnimationFrame(() => openDoneModal(message));
     }

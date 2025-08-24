@@ -153,9 +153,16 @@ main {
     font-weight: 400;
     margin-top: 10px;
     height: 57px;
-
+    width: 360px;
     line-height: 57px; /* 高さと同じにすると縦中央 */
     text-align: center; /* 横中央にしたい場合 */
+        
+    /* 文字数が長い場合はスクロール */
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    text-overflow: clip;
+    scrollbar-width: thin;
 }
 
 

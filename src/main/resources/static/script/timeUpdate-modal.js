@@ -25,7 +25,7 @@
         const title = body.dataset.updatedTitle;
         const time= body.dataset.updatedTime;
         console.log(`時間更新: ${time}`);
-        const message = `${title} の学習時間を保存しました！`;
+        const message = `${title}の学習時間を保存しました！`;
         // DOM が描画された後に開く（ちらつき防止）
         window.requestAnimationFrame(() => openDoneModal(message));
     }
