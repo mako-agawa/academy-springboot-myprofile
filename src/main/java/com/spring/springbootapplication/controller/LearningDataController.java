@@ -61,9 +61,9 @@ public class LearningDataController {
 
                 User currentUser = userService.getCurrentUser();
                 TimeRecordFrom timeRecordForm = new TimeRecordFrom();
-                
+
                 model.addAttribute("timeRecordForm", timeRecordForm);
-                
+
                 model.addAttribute("backEndLearningDatas",
                                 learningDataService.getLearningDataByCategoryNameAndMonth(currentUser.getId(), "バックエンド",
                                                 targetMonth));
@@ -116,52 +116,53 @@ public class LearningDataController {
                         @RequestParam("month") String monthParam,
                         Model model) {
 
-                if (result.hasErrors()) {
-                        model.addAttribute("targetMonthValue", monthParam);
-                        model.addAttribute("selectedCategoryId", form.getCategoryId());
-                        model.addAttribute("selectedCategory",
-                                        categoryRepository.findById(form.getCategoryId())
-                                                        .map(Category::getTitle).orElse("カテゴリ名"));
-                        return "skill/new";
-                }
-
-                User currentUser = userService.getCurrentUser();
-
-                LearningData data = new LearningData();
-                data.setTitle(form.getTitle());
-                data.setTimeRecord(form.getTimeRecord());
-                data.setUser(currentUser);
-
-                Category category = categoryRepository.findById(form.getCategoryId())
-                                .orElseThrow(() -> new RuntimeException("カテゴリが見つかりません"));
-                data.setCategory(category);
-
-                YearMonth ym = YearMonth.parse(monthParam);
-                data.setLearningDate(ym.atDay(1).atStartOfDay());
-
+                // monthParamを検証
+                YearMonth ym = null;
                 try {
-                        learningDataService.saveWithValidation(data);
-                } catch (IllegalArgumentException e) {
-                        result.rejectValue("title", "duplicate", e.getMessage());
-                        model.addAttribute("targetMonthValue", monthParam);
-                        model.addAttribute("selectedCategoryId", category.getId());
-                        model.addAttribute("selectedCategory", category.getTitle());
-                        return "skill/new";
+                        ym = YearMonth.parse(monthParam);
+                } catch (Exception ex) {
+                        // SkillForm に month フィールドが無いならオブジェクトエラーでもOK
+                        result.rejectValue("month", "invalid.month", "月を正しく選択してください（例：2025-08）");
+                }
+              
+                String selectedCategoryTitle = categoryRepository.findById(form.getCategoryId())
+                                .map(Category::getTitle).orElse("カテゴリ名");
+
+                // 3) 業務チェック（重複など）は「バリデーションに通っている時だけ」試す。
+                if (!result.hasErrors()) {
+                        try {
+                                User currentUser = userService.getCurrentUser();
+
+                                LearningData data = new LearningData();
+                                data.setTitle(form.getTitle());
+                                data.setTimeRecord(form.getTimeRecord());
+                                data.setUser(currentUser);
+
+                                Category category = categoryRepository.findById(form.getCategoryId())
+                                                .orElseThrow(() -> new RuntimeException("カテゴリが見つかりません"));
+                                data.setCategory(category);
+
+                                data.setLearningDate(ym.atDay(1).atStartOfDay());
+
+                                learningDataService.saveWithValidation(data);
+                                model.addAttribute("addSuccess", true);
+                                model.addAttribute("addTitle", data.getTitle());
+                                model.addAttribute("addTime", data.getTimeRecord());
+                                model.addAttribute("addCategory", category.getTitle());
+                                model.addAttribute("redirectMonth", monthParam);
+
+                                // フォームを空にしたい場合
+                                model.addAttribute("skillformModel", new SkillForm());
+
+                        } catch (IllegalArgumentException e) {
+                                // ★ 重複などの業務エラーを BindingResult に積む
+                                result.rejectValue("title", "duplicate", e.getMessage());
+                        }
                 }
 
-                // ★ 成功フラグとモーダル文言に必要な最低限の文字列を model に載せる
-                model.addAttribute("addSuccess", true);
-                model.addAttribute("addTitle", data.getTitle());
-                model.addAttribute("addTime", data.getTimeRecord());
-                model.addAttribute("addCategory", category.getTitle());
-                model.addAttribute("redirectMonth", monthParam); // OK押下で戻る先に使う
-
-                // ★ そのまま new の画面を再表示（ここでモーダルを出す）
                 model.addAttribute("targetMonthValue", monthParam);
                 model.addAttribute("selectedCategoryId", form.getCategoryId());
-                model.addAttribute("selectedCategory", category.getTitle());
-                // フォームを空にしたい場合は新しいフォームを渡す
-                model.addAttribute("skillformModel", new SkillForm());
+                model.addAttribute("selectedCategory", selectedCategoryTitle);
 
                 return "skill/new";
         }
@@ -173,7 +174,6 @@ public class LearningDataController {
                         @ModelAttribute("timeRecordForm") @Validated TimeRecordFrom timeRecordFromorm,
                         BindingResult result,
                         RedirectAttributes redirectAttrs) {
-                                
 
                 if (result.hasErrors()) {
                         // 簡易的に一覧へ戻す。必要ならエラーフラッシュを載せる
