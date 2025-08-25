@@ -14,7 +14,7 @@ import lombok.Setter;
 public class SkillForm {
     private Long id;
 
-    @NotBlank(message = "スキル名は必ず入力してください")
+    @NotBlank(message = "項目名は必ず入力してください")
     @Size(max = 50, message = "項目名は50文字以内で入力してください")
     private String title;
 
