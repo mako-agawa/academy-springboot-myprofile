@@ -51,6 +51,7 @@ public class LearningDataController {
                 YearMonth targetMonth = (monthParam == null) ? YearMonth.now() : YearMonth.parse(monthParam);
                 model.addAttribute("targetMonthLabel", targetMonth.getMonthValue() + "月");
                 model.addAttribute("targetMonth", targetMonth);
+                model.addAttribute("targetMonthValue", targetMonth.toString()); // ← ★追加
 
                 model.addAttribute("currentMonthValue", YearMonth.now().toString());
                 model.addAttribute("currentMonthLabel", YearMonth.now().getMonthValue() + "月");
@@ -124,7 +125,7 @@ public class LearningDataController {
                         // SkillForm に month フィールドが無いならオブジェクトエラーでもOK
                         result.rejectValue("month", "invalid.month", "月を正しく選択してください（例：2025-08）");
                 }
-              
+
                 String selectedCategoryTitle = categoryRepository.findById(form.getCategoryId())
                                 .map(Category::getTitle).orElse("カテゴリ名");
 

@@ -34,22 +34,25 @@
   </header>
 
   <main class="container">
+
     <div class="select-box">
       <button class="btn" id="btn">
-        <span class="selectd-month" th:text="${targetMonthLabel}"></span>
+        <span class="selectd-month" th:value="${targetMonth}" th:text="${targetMonthLabel}"></span>
         <span class="arrow" id="arrow">▼</span>
       </button>
       <div class="dropdown" id="dropdown">
         <a th:value="${currentMonthValue}" th:text="${currentMonthLabel}"
           th:href="@{/skill(month=${currentMonthValue})}"
-          th:classappend="${targetMonth == currentMonthValue} ? 'active'">
+          th:classappend="${targetMonthValue == currentMonthValue} ? ' active'">
         </a>
+
         <a th:value="${lastMonthValue}" th:text="${lastMonthLabel}" th:href="@{/skill(month=${lastMonthValue})}"
-          th:classappend="${targetMonth == lastMonthValue} ? 'active'">
+          th:classappend="${targetMonthValue == lastMonthValue} ? ' active'">
         </a>
+
         <a th:value="${twoMonthsAgoValue}" th:text="${twoMonthsAgoLabel}"
           th:href="@{/skill(month=${twoMonthsAgoValue})}"
-          th:classappend="${targetMonth == twoMonthsAgoValue} ? 'active'">
+          th:classappend="${targetMonthValue == twoMonthsAgoValue} ? ' active'">
         </a>
       </div>
     </div>
