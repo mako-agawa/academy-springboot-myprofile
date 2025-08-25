@@ -42,12 +42,15 @@
       </button>
       <div class="dropdown" id="dropdown">
         <a th:value="${currentMonthValue}" th:text="${currentMonthLabel}"
-          th:href="@{/skill(month=${currentMonthValue})}">
+          th:href="@{/skill(month=${currentMonthValue})}"
+          th:classappend="${targetMonth == currentMonthValue} ? 'active'">
         </a>
-        <a th:value="${lastMonthValue}" th:text="${lastMonthLabel}" th:href="@{/skill(month=${lastMonthValue})}">
+        <a th:value="${lastMonthValue}" th:text="${lastMonthLabel}" th:href="@{/skill(month=${lastMonthValue})}"
+          th:classappend="${targetMonth == lastMonthValue} ? 'active'">
         </a>
         <a th:value="${twoMonthsAgoValue}" th:text="${twoMonthsAgoLabel}"
-          th:href="@{/skill(month=${twoMonthsAgoValue})}">
+          th:href="@{/skill(month=${twoMonthsAgoValue})}"
+          th:classappend="${targetMonth == twoMonthsAgoValue} ? 'active'">
         </a>
       </div>
     </div>

@@ -1,7 +1,19 @@
+.select-box{
+  margin: 40px 0 16px;
+  width: 94px !important;
+  height: 44px !important;
+  position: relative;     
+  display: inline-block; 
+}
 
+.selectd-month{
+  font-size: 24px;
+  font-weight: 700;
+  padding-right: 4px;
+  padding-left: 8px;
+}
 
-
-
+/* ボタン */
 .btn {
   background-color: white;
   display: flex;
@@ -10,56 +22,66 @@
   cursor: pointer;
   border-radius: 4px;
   position: relative;
+  padding: 8px 10px;
+  border: 0.5px solid #000000BF;
+  min-width: 94px; /* ドロップダウンと幅合わせ */
 }
 
-.bx {
-  font-size: 1.1rem;
+/* 開いている間はグレーでホールド */
+.btn[aria-expanded="true"] {
+  background-color: #f0f0f0;
 }
 
+/* ドロップダウン本体 */
 .dropdown {
   position: absolute;
+  top: -1;
+  left: 0;
   width: 94px;
   border: 0.5px solid #000000BF;
   border-radius: 4px;
   margin-top: 0.3rem;
   background: white;
-
+  box-shadow: 0px 1px 1.5px 1px rgba(0, 0, 0, 0.359);
+  z-index: 999;            /* ↑にしておくと他要素に埋もれにくい */
   visibility: hidden;
   opacity: 0;
   transform: translateY(0.5rem);
   transition: all 0.1s cubic-bezier(0.16, 1, 0.5, 1);
 }
+/* 展開時 */
+.dropdown.show {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
 
-
+/* リンク */
 .dropdown a {
-  
+  font-size: 22px;
   display: flex;
   align-items: center;
-  column-gap: var(--gap);
-  padding: 8px;
+  padding: 8px 18px;
   text-decoration: none;
   color: black;
 }
 
+/* ホバー */
 .dropdown a:hover {
   background-color: rgba(180, 180, 180, 0.697);
-  /* color: rgba(255, 255, 255, 0.319); */
 }
 
-.show {
-  visibility: visible;
-  opacity: 1;
-  transform: translateY(0rem);
+/* 現在選択中は太字 */
+.dropdown a.active {
+  font-weight: 700;
 }
 
-
-
-.arrow {
-  transition: 0.2s ease;
-}
-
-#arrow {
+/* ▼矢印のアニメーション */
+/* #arrow {
   display: inline-block;
   margin-left: 0.5rem;
   transition: transform 0.2s ease;
 }
+.arrow-up {
+  transform: rotate(180deg);
+} */

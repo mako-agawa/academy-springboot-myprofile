@@ -31,7 +31,7 @@
     const time = body.dataset.addTime || "";
     const category = body.dataset.addCategory || "";
     const msgA = `${category}に${title}を`;
-    const msgB = `${time}分で登録しました。`;
+    const msgB = `${time}分で登録しました！`;
 
     // DOM描画のあとに開くなら1回で十分
     window.requestAnimationFrame(() => openDoneModal(msgA, msgB));
