@@ -17,6 +17,10 @@
 **【Service】**
 - LearningDataService.java の更新
 
+**【Repository】**
+- LearningDataRepository.java の更新
+→検索用メソッドを追加
+
 **【Web】**
 - SkillForm.javaを作成。※項目追加のデータを受け取るため。
 
