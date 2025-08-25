@@ -31,34 +31,44 @@
 .modal-content {
   background: #fff;
   width: 640px;
-  max-width: calc(100% - 32px); /* 画面が狭い時に余白を確保 */
+  max-width: calc(100% - 32px);
   min-height: 240px;
-  padding: 24px 48px 24px;
-  border-radius: 12px;
+  padding: 24px 48px;
   box-shadow: 0 8px 24px rgba(0,0,0,0.2);
 
   display: flex;
-  flex-direction: column;
-  align-items: center;         /* 中央寄せ */
-  justify-content: center;
+  justify-content: center;  /* 水平方向中央 */
+  align-items: center;      /* 垂直方向中央 */
+}
 
-  gap: 0px;
-  margin: 0;                  /* ← margin: auto; 等は不要 */
+.modal-wapper {
+  display: flex;
+  flex-direction: column;   /* ← 縦並び */
+  align-items: center;      /* 横中央 */
+  justify-content: center;  /* 縦中央 */
+  width: 100%;
+  height: 100%;
 }
 
 /* テキストとボタン */
-.modal-content p {
+.modal-wapper p {
   font-size: 18px;
   color: var(--color-text);
   font-weight: 700;
-  margin: 0 48px 4px;
+  text-align: center; /* 中央揃え */
+}
+
+.modal-wapper span {
+  font-size: 18px;
+  color: var(--color-text);
+  font-weight: 700;
+  text-align: center; /* 中央揃え */
 }
 
 .modal-actions {
   display: flex;
   justify-content: center;
-  gap: 12px;
-  margin-top: 8px;
+  margin-top: 40px;
   width: 100%;
 }
 
@@ -67,7 +77,6 @@
   height: 48px;
   font-size: 14px;
   border-radius: 4px;
-  margin-top: 40px;
   border: none;
   color: var(--color-sub);
   background-color: var(--color-main);
