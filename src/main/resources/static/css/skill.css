@@ -19,6 +19,9 @@ body,html {
     font-family: 'Roboto', sans-serif;
     height: 100vmax;
     color: var(--color-text);
+    display: flex;
+    flex-direction: column;
+    margin: 0; 
 }
 
 main {
