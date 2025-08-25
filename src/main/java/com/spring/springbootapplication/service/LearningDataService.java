@@ -45,7 +45,7 @@ public class LearningDataService {
                 endOfMonth);
 
         if (exists) {
-            throw new IllegalArgumentException("同じ月に同じスキル名は登録できません");
+            throw new IllegalArgumentException(data.getTitle() + "は既に登録されています");
         }
 
         return learningDataRepository.save(data);
