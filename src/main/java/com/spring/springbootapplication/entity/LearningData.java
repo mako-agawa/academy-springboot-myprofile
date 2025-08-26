@@ -21,9 +21,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+@Table(name = "learning_data")
 @Getter
 @Setter
-@Table(name = "learning_data")
 public class LearningData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,16 +52,19 @@ public class LearningData {
     @JsonBackReference("category-learning")
     private Category category;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
     @PrePersist
     public void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = createdAt;
+        final LocalDateTime now = LocalDateTime.now();
+        if (createdAt == null)
+            createdAt = now; // ← 明示
+        if (updatedAt == null)
+            updatedAt = now; // ← 明示
     }
 
     @PreUpdate

@@ -83,7 +83,6 @@
                 <!-- コントローラが受け取るパラメータ -->
                 <input type="hidden" name="id" th:value="${backEndData.id}">
                 <input type="hidden" name="month" th:value="${targetMonth}">
-                <!-- 入力値（バインドは th:field で） -->
                 <input class="skill-time" type="number" min="0" name="timeRecord" th:value="${backEndData.timeRecord}">
                 <button type="submit" class="skill-time-submit-btn">学習時間を保存する</button>
               </form>
@@ -124,7 +123,6 @@
                 <!-- コントローラが受け取るパラメータ -->
                 <input type="hidden" name="id" th:value="${frontEndData.id}">
                 <input type="hidden" name="month" th:value="${targetMonth}">
-                <!-- 入力値（バインドは th:field で） -->
                 <input class="skill-time" type="number" min="0" name="timeRecord" th:value="${frontEndData.timeRecord}">
                 <button type="submit" class="skill-time-submit-btn">学習時間を保存する</button>
               </form>
@@ -164,7 +162,6 @@
                 <!-- コントローラが受け取るパラメータ -->
                 <input type="hidden" name="id" th:value="${infraData.id}">
                 <input type="hidden" name="month" th:value="${targetMonth}">
-                <!-- 入力値（バインドは th:field で） -->
                 <input class="skill-time" type="number" min="0" name="timeRecord" th:value="${infraData.timeRecord}">
                 <button type="submit" class="skill-time-submit-btn">学習時間を保存する</button>
               </form>
