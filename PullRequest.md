@@ -1,37 +1,4 @@
 
-
-
-
-============================================
-
-### 対象チケット
-[【個人開発13】項目削除機能実装
-](https://prum.backlog.com/view/PRUM_ACADEMY-5524) 
-
-### 概要
-項目の削除機能を実装する
-
-### 内容
-1. 「削除する」ボタンを押下すると該当の項目が削除されるようにした。
-2. その後、削除完了のモーダルが表示され、項目一覧画面へ戻る。
-
-### 主要なファイル
-**【Controller】**
-- LearningDataController.java の更新
-→　deleteSkillメソッドを追加
-
-**【Service】**
-- LearningDataService.java の更新　 
-→ deleteByIdメソッドを追加
-
-**【Web】**
-- TimeRecordFrom.javaを作成。※項目追加のデータを受け取るため。
-
-**【resources】**
-- /skill/index.htmlを更新。
-- delete-modal.jsを作成。
-
-
 ============================================
 
 
@@ -49,18 +16,16 @@
 ### 主要なファイル
 **【Controller】**
 - LearningDataController.java の更新
-→　
+- ChartApiController.javaを作成 
+　→ /api/chart-dataに学習時間のデータをJSON形式で出力。
 
 **【Service】**
 - LearningDataService.java の更新　 
 → 
 
-**【Web】**
-- 
-
 **【resources】**
-- /index.htmlを更新。
-- learning-chart.jsを作成。
+- /skill/index.htmlを更新。
+- learning-chart.jsを作成。/api/chart-dataからJSONデータを取得。
 
 
 ============================================

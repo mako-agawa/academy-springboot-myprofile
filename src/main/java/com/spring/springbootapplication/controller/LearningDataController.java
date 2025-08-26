@@ -179,10 +179,6 @@ public class LearningDataController {
                 if (result.hasErrors()) {
                         // 簡易的に一覧へ戻す。必要ならエラーフラッシュを載せる
                         redirectAttrs.addFlashAttribute("updateError", "入力値に誤りがあります。");
-
-                        System.out.println("===========================");
-                        System.out.println("Validation errors: " + result.getAllErrors());
-                        System.out.println("===========================");
                         return "redirect:/skill?month=" + monthParam;
                 }
 
@@ -201,9 +197,6 @@ public class LearningDataController {
                 redirectAttrs.addFlashAttribute("updateSuccess", true);
                 redirectAttrs.addFlashAttribute("updatedTitle", learningData.getTitle());
                 redirectAttrs.addFlashAttribute("updatedTime", learningData.getTimeRecord());
-                System.out.println("===========================");
-                System.out.println("Time record updated: " + learningData.getTimeRecord());
-                System.out.println("===========================");
                 return "redirect:/skill?month=" + monthParam;
         }
 
