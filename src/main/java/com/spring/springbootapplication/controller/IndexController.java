@@ -41,9 +41,14 @@ public class IndexController {
         }
 
         // ← これを追加：MapをそのままModelへ
-        Map<String, Map<String, Integer>> chartData = skillChartService.getChartData();
-        model.addAttribute("chartData", chartData);
+        // Map<String, Map<String, Integer>> chartData = skillChartService.getChartData(loggedInUser);
+        // model.addAttribute("chartData", chartData);
 
+        Map<String, Map<String, Integer>> skillchartData = skillChartService.getSkillChartData(loggedInUser.getId());
+        model.addAttribute("chartData", skillchartData);
+        System.out.println("==============");
+        System.out.println(skillchartData);
+        System.out.println("==============");
         return "index";
     }
 
