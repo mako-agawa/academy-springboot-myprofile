@@ -77,11 +77,11 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   });
 
-  console.log("===========");
-  console.log(datasets);
-  console.log(datasets[0]);
-  console.log(datasets[0].data[0]);
-  console.log("===========");
+  // console.log("===========");
+  // console.log(datasets);
+  // console.log(datasets[0]);
+  // console.log(datasets[0].data[0]);
+  // console.log("===========");
 
   const suggestedMax =
     Math.max(0, ...datasets.flatMap(ds => ds.data)) * 1.1; // 10%余白
