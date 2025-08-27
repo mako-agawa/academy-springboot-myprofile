@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.spring.springbootapplication.entity.LearningData;
 
 public interface LearningDataRepository extends JpaRepository<LearningData, Long> {
+        
 
         boolean existsByUserIdAndTitleAndLearningDateBetween(
                         Long userId, String title, LocalDateTime start, LocalDateTime end);
