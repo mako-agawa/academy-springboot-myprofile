@@ -1,22 +1,22 @@
-package com.spring.springbootapplication.controller;
+// package com.spring.springbootapplication.controller;
 
-import com.spring.springbootapplication.service.SkillChartService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-import java.util.Map;
+// import com.spring.springbootapplication.service.SkillChartService;
+// import org.springframework.web.bind.annotation.GetMapping;
+// import org.springframework.web.bind.annotation.RestController;
+// import java.util.Map;
 
-@RestController
-public class ChartApiController {
+// @RestController
+// public class ChartApiController {
 
-    private final SkillChartService skillChartService;
+//     private final SkillChartService skillChartService;
 
-    public ChartApiController(SkillChartService skillChartService) {
-        this.skillChartService = skillChartService;
-    }
+//     public ChartApiController(SkillChartService skillChartService) {
+//         this.skillChartService = skillChartService;
+//     }
 
-    @GetMapping("/api/chart-data")
-    public Map<String, Map<String, Integer>> getChartData() {
+//     @GetMapping("/api/chart-data")
+//     public Map<String, Map<String, Integer>> getChartData() {
 
-        return skillChartService.getChartData();
-    }
-}
+//         return skillChartService.getChartData();
+//     }
+// }

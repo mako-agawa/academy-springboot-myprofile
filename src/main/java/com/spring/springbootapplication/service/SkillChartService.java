@@ -32,12 +32,6 @@ public class SkillChartService {
         result.put("frontend", buildCategoryData(user.getId(), "フロントエンド", currentMonth, lastMonth, twoMonthsAgo));
         result.put("infra", buildCategoryData(user.getId(), "インフラ", currentMonth, lastMonth, twoMonthsAgo));
 
-        System.out.println("================");
-        System.out.println(buildCategoryData(user.getId(), "バックエンド", currentMonth, lastMonth, twoMonthsAgo));
-        System.out.println(buildCategoryData(user.getId(), "フロントエンド", currentMonth, lastMonth, twoMonthsAgo));
-        System.out.println(buildCategoryData(user.getId(), "インフラ", currentMonth, lastMonth, twoMonthsAgo));
-        System.out.println("================");
-
         return result;
     }
 
