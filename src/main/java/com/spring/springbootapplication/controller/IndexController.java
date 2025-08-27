@@ -1,5 +1,7 @@
 package com.spring.springbootapplication.controller;
 
+import java.util.Map;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -7,16 +9,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.spring.springbootapplication.entity.User;
-
+import com.spring.springbootapplication.service.SkillChartService;
 import com.spring.springbootapplication.service.UserService;
 
 @Controller
 public class IndexController {
     private final UserService userService;
+    private final SkillChartService skillChartService;
 
     // コンストラクタ注入
-    public IndexController(UserService userService) {
+    public IndexController(UserService userService, SkillChartService skillChartService) {
         this.userService = userService;
+        this.skillChartService = skillChartService;
     }
 
     @GetMapping("/")
@@ -35,6 +39,11 @@ public class IndexController {
             model.addAttribute("thumbnailUrl",
                     "/image/default-avatar.avif");
         }
+
+        // ← これを追加：MapをそのままModelへ
+        Map<String, Map<String, Integer>> chartData = skillChartService.getChartData();
+        model.addAttribute("chartData", chartData);
+
         return "index";
     }
 
