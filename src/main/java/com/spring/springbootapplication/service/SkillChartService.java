@@ -61,7 +61,7 @@ public class SkillChartService {
     // ====パターンB===
 
     public Map<String, Map<String, Integer>> getSkillChartData(Long userId) {
-        YearMonth current = YearMonth.now(ZoneId.of("Asia/Tokyo"));
+        YearMonth current = YearMonth.now();
         LocalDateTime startTwo = current.minusMonths(2).atDay(1).atStartOfDay(); // 先々月1日 00:00
         LocalDateTime startNext = current.plusMonths(1).atDay(1).atStartOfDay(); // 来月1日 00:00
 

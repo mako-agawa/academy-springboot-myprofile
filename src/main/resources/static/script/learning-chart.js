@@ -68,8 +68,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const canvas = document.getElementById("myChart");
   if (!canvas) return;
-
-  // Thymeleaf から: { "YYYY-MM": { "バックエンド": 分, "フロントエンド": 分, "インフラ": 分 }, ... }
+ 
   const dataByMonth = window.CHART_DATA || {};
 
   const toHours = (m) => (typeof m === "number" ? m / 60 : 0);
@@ -87,10 +86,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const last = new Date(now.getFullYear(), now.getMonth() - 1, 1);
   const twoAgo = new Date(now.getFullYear(), now.getMonth() - 2, 1);
 
-  const monthKeys = [ym(twoAgo), ym(last), ym(current)]; // ["2025-06","2025-07","2025-08"]
+  const monthKeys = [ym(twoAgo), ym(last), ym(current)]; 
   const labels = ["先々月", "先月", "今月"];
 
-  // シリーズ設定（データ内の“日本語カテゴリ名”を参照）
+  // ラベルと色
   const series = [
     { label: "バックエンド", color: "rgb(243, 181, 194)" },
     { label: "フロントエンド", color: "#F7D1AA" },

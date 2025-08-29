@@ -37,7 +37,7 @@ public class IndexController {
                             + loggedInUser.getThumbnailPublicId() + ".jpg");
         } else {
             model.addAttribute("thumbnailUrl",
-                    "/image/default-avatar.avif");
+                    "/image/default-avatar.png");
         }
 
         // ← これを追加：MapをそのままModelへ
