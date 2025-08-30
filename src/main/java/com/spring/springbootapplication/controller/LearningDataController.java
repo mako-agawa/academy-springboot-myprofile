@@ -110,62 +110,53 @@ public class LearningDataController {
         }
 
         @PostMapping("/skill/new")
-        @Transactional
         public String createSkill(
-                        @ModelAttribute("skillformModel") @Valid SkillForm form,
+                        @ModelAttribute("skillformModel") @Validated SkillForm form,
                         BindingResult result,
                         @RequestParam("month") String monthParam,
                         Model model) {
 
-                // monthParamを検証
-                YearMonth ym = null;
+                User currentUser = userService.getCurrentUser();
+
+                // learningDateの補完（フォーム未設定ならmonthParamから）
+                if (form.getLearningDate() == null) {
+                        form.setLearningDate(YearMonth.parse(monthParam).atDay(1).atStartOfDay());
+                }
+
+                // ここでカテゴリタイトルを解決（以降で何度も使う）
+                String categoryTitle = categoryRepository.findById(form.getCategoryId())
+                                .map(Category::getTitle)
+                                .orElse("未分類");
+
+                if (result.hasErrors()) {
+                        // ★ エラー再表示に必要な属性を必ず詰める
+                        model.addAttribute("selectedCategory", categoryTitle);
+                        model.addAttribute("targetMonthValue", monthParam);
+                        return "skill/new";
+                }
+
+                LearningData data = new LearningData();
+                data.setTitle(form.getTitle());
+                data.setTimeRecord(form.getTimeRecord());
+                data.setLearningDate(form.getLearningDate());
+                data.setUser(currentUser);
+
+                Category category = categoryRepository.findById(form.getCategoryId())
+                                .orElseThrow(() -> new RuntimeException("カテゴリが見つかりません"));
+                data.setCategory(category);
+
                 try {
-                        ym = YearMonth.parse(monthParam);
-                } catch (Exception ex) {
-                        // SkillForm に month フィールドが無いならオブジェクトエラーでもOK
-                        result.rejectValue("month", "invalid.month", "月を正しく選択してください（例：2025-08）");
+                        learningDataService.saveWithValidation(data);
+                } catch (IllegalArgumentException e) {
+                        // ★ 例外（重複など）時も同様に再表示へ戻す
+                        result.rejectValue("title", "duplicate", e.getMessage());
+                        model.addAttribute("selectedCategory", categoryTitle);
+                        model.addAttribute("targetMonthValue", monthParam);
+                        return "skill/new";
                 }
 
-                String selectedCategoryTitle = categoryRepository.findById(form.getCategoryId())
-                                .map(Category::getTitle).orElse("カテゴリ名");
-
-                // 3) 業務チェック（重複など）は「バリデーションに通っている時だけ」試す。
-                if (!result.hasErrors()) {
-                        try {
-                                User currentUser = userService.getCurrentUser();
-
-                                LearningData data = new LearningData();
-                                data.setTitle(form.getTitle());
-                                data.setTimeRecord(form.getTimeRecord());
-                                data.setUser(currentUser);
-
-                                Category category = categoryRepository.findById(form.getCategoryId())
-                                                .orElseThrow(() -> new RuntimeException("カテゴリが見つかりません"));
-                                data.setCategory(category);
-
-                                data.setLearningDate(ym.atDay(1).atStartOfDay());
-
-                                learningDataService.saveWithValidation(data);
-                                model.addAttribute("addSuccess", true);
-                                model.addAttribute("addTitle", data.getTitle());
-                                model.addAttribute("addTime", data.getTimeRecord());
-                                model.addAttribute("addCategory", category.getTitle());
-                                model.addAttribute("redirectMonth", monthParam);
-
-                                // フォームを空にしたい場合
-                                model.addAttribute("skillformModel", new SkillForm());
-
-                        } catch (IllegalArgumentException e) {
-                                // ★ 重複などの業務エラーを BindingResult に積む
-                                result.rejectValue("title", "duplicate", e.getMessage());
-                        }
-                }
-
-                model.addAttribute("targetMonthValue", monthParam);
-                model.addAttribute("selectedCategoryId", form.getCategoryId());
-                model.addAttribute("selectedCategory", selectedCategoryTitle);
-
-                return "skill/new";
+                // 正常時のみ一覧へ
+                return "redirect:/skill?month=" + monthParam;
         }
 
         @PostMapping("/skill/update")
