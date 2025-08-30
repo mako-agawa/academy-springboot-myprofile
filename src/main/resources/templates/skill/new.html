@@ -30,9 +30,8 @@
 
       <form th:action="@{/skill/new}" th:object="${skillformModel}" method="post" novalidate>
         <input type="hidden" name="month" th:value="${targetMonthValue}" />
-        <input type="hidden" th:field="*{userId}" th:value="${userId}" />
-        <input type="hidden" th:field="*{categoryId}" th:value="${selectedCategoryId}" />
-
+        <input type="hidden" th:field="*{userId}" />
+        <input type="hidden" th:field="*{categoryId}" />
         <div class="form-group">
           <label>項目名</label>
           <input type="text" th:field="*{title}" class="form-control" required>
