@@ -12,6 +12,7 @@ input.addEventListener("change", async () => {
         const max = 3 * 1024 * 1024;
         if (file.size > max) {
             label.textContent = "画像は3MB以下にしてください";
+            label.classList.add("text-danger"); 
             hiddenPublicId.value = "";
             return;
         }
@@ -50,6 +51,7 @@ input.addEventListener("change", async () => {
         }
     } else {
         label.textContent = "ファイル未選択";
+        label.classList.remove("text-danger"); 
         hiddenPublicId.value = "";
     }
 });
