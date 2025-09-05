@@ -14,9 +14,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // 閉じる（→ リダイレクト）
   okBtn?.addEventListener("click", () => {
     console.log("モーダル2");
-    modal.classList.remove("show");          // ← show を外すだけ
-    modal.setAttribute("aria-hidden", "true");
+    // ← ここで「閉じる処理」は一切しない（showを外さない／aria-hiddenを変えない）
+    okBtn.disabled = true;        // 二重クリック防止（任意）
+    // すぐに遷移
     window.location.href = `/skill?month=${encodeURIComponent(month)}`;
+    // location.assign(`/skill?month=${encodeURIComponent(month)}`); でもOK
   });
 
   if (!addSuccess) return;
