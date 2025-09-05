@@ -118,45 +118,58 @@ public class LearningDataController {
 
                 User currentUser = userService.getCurrentUser();
 
-                // learningDateの補完（フォーム未設定ならmonthParamから）
                 if (form.getLearningDate() == null) {
                         form.setLearningDate(YearMonth.parse(monthParam).atDay(1).atStartOfDay());
                 }
 
-                // ここでカテゴリタイトルを解決（以降で何度も使う）
                 String categoryTitle = categoryRepository.findById(form.getCategoryId())
                                 .map(Category::getTitle)
                                 .orElse("未分類");
 
                 if (result.hasErrors()) {
-                        // ★ エラー再表示に必要な属性を必ず詰める
                         model.addAttribute("selectedCategory", categoryTitle);
                         model.addAttribute("targetMonthValue", monthParam);
                         return "skill/new";
                 }
+
+                Category category = categoryRepository.findById(form.getCategoryId())
+                                .orElseThrow(() -> new RuntimeException("カテゴリが見つかりません"));
 
                 LearningData data = new LearningData();
                 data.setTitle(form.getTitle());
                 data.setTimeRecord(form.getTimeRecord());
                 data.setLearningDate(form.getLearningDate());
                 data.setUser(currentUser);
-
-                Category category = categoryRepository.findById(form.getCategoryId())
-                                .orElseThrow(() -> new RuntimeException("カテゴリが見つかりません"));
                 data.setCategory(category);
 
                 try {
                         learningDataService.saveWithValidation(data);
                 } catch (IllegalArgumentException e) {
-                        // ★ 例外（重複など）時も同様に再表示へ戻す
                         result.rejectValue("title", "duplicate", e.getMessage());
                         model.addAttribute("selectedCategory", categoryTitle);
                         model.addAttribute("targetMonthValue", monthParam);
                         return "skill/new";
                 }
 
-                // 正常時のみ一覧へ
-                return "redirect:/skill?month=" + monthParam;
+                // ★ モーダル表示用のフラグと文言、戻り先パラメータを渡す
+                model.addAttribute("addSuccess", true);
+                model.addAttribute("addTitle", form.getTitle());
+                model.addAttribute("addTime", form.getTimeRecord());
+                model.addAttribute("addCategory", category.getTitle());
+                model.addAttribute("redirectMonth", monthParam);
+
+                // ★ フォームをリセット（必要な初期値だけ再セット）
+                SkillForm emptyForm = new SkillForm();
+                emptyForm.setUserId(currentUser.getId());
+                emptyForm.setCategoryId(category.getId());
+                emptyForm.setLearningDate(form.getLearningDate());
+                model.addAttribute("skillformModel", emptyForm);
+
+                // 表示用（見出し等）
+                model.addAttribute("selectedCategory", categoryTitle);
+                model.addAttribute("targetMonthValue", monthParam);
+
+                return "skill/new"; // ← redirect しない
         }
 
         @PostMapping("/skill/update")

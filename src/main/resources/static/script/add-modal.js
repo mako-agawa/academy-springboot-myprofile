@@ -1,41 +1,29 @@
-(function () {
-  const body = document.body;
-  const doneModal = document.getElementById("doneModal");
-  if (!body || !doneModal) return;
+document.addEventListener("DOMContentLoaded", () => {
+  const root  = document.body;
+  const modal = document.getElementById("doneModal");
+  const msgA  = document.getElementById("doneMessageA");
+  const msgB  = document.getElementById("doneMessageB");
+  const okBtn = document.querySelector(".modal-ok");
 
-  const okBtn = doneModal.querySelector(".modal-ok");
-  const msgElA = doneModal.querySelector("#doneMessageA");
-  const msgElB = doneModal.querySelector("#doneMessageB");
+  const addSuccess = root.dataset.addSuccess === "true";
+  const title = root.dataset.addTitle || "";
+  const time  = root.dataset.addTime || "";
+  const cat   = root.dataset.addCategory || "";
+  const month = root.dataset.redirectMonth || "";
 
-  function openDoneModal(messageA, messageB) {
-    if (msgElA) msgElA.textContent = messageA ?? "";
-    if (msgElB) msgElB.textContent = messageB ?? "";
-    doneModal.classList.add("show");
-    doneModal.setAttribute("aria-hidden", "false");
-  }
+  // 閉じる（→ リダイレクト）
+  okBtn?.addEventListener("click", () => {
+    console.log("モーダル2");
+    modal.classList.remove("show");          // ← show を外すだけ
+    modal.setAttribute("aria-hidden", "true");
+    window.location.href = `/skill?month=${encodeURIComponent(month)}`;
+  });
 
-  function closeDoneModal() {
-    doneModal.classList.remove("show");
-    doneModal.setAttribute("aria-hidden", "true");
-  }
+  if (!addSuccess) return;
 
-  function redirectToSkill() {
-    const month = body.dataset.redirectMonth || "";
-    const url = month ? `/skill?month=${encodeURIComponent(month)}` : "/skill";
-    window.location.href = url;
-  }
-
-  const success = body.dataset.addSuccess === "true";
-  if (success) {
-    const title = body.dataset.addTitle || "";
-    const time = body.dataset.addTime || "";
-    const category = body.dataset.addCategory || "";
-    const msgA = `${category}に${title}を`;
-    const msgB = `${time}分で追加しました！`;
-
-    // DOM描画のあとに開くなら1回で十分
-    window.requestAnimationFrame(() => openDoneModal(msgA, msgB));
-  }
-
-  okBtn?.addEventListener("click", redirectToSkill);
-})();
+  // 開く
+  msgA.textContent = `${cat}に${title}を`;
+  msgB.textContent = `${time}分で追加しました。`;
+  modal.classList.add("show");               // ← show を付けるだけ
+  modal.setAttribute("aria-hidden", "false");
+});
